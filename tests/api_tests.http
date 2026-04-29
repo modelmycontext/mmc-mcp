@@ -1,0 +1,36 @@
+### GET Capabilities
+GET http://localhost:3001/capabilities
+Accept: application/json
+
+### POST Resync
+POST http://localhost:3002/resync
+Accept: application/json
+
+### POST MCP (Handshake)
+POST http://localhost:3001/mcp
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2024-11-05",
+    "capabilities": {},
+    "clientInfo": {
+      "name": "HTTP-Test-Script",
+      "version": "1.0.0"
+    }
+  }
+}
+
+### POST MCP (List Tools)
+POST http://localhost:3001/mcp
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/list",
+  "params": {}
+}

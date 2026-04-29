@@ -1,0 +1,45 @@
+{
+  "manifest_version": "0.3",
+  "name": "mmc-mcp",
+  "display_name": "MMC MCP Server",
+  "version": "1.5.3",
+  "description": "MCP server for executing business skills and orchestrating AI-assisted workflows via outcome models and event-driven slices.",
+  "author": {
+    "name": "Arjan Noordhoek",
+    "email": "arjan@ebdconnect.com"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "MCP_PROJECT_ROOT": "${__dirname}",
+        "OPENROUTER_API_KEY": "${user_config.openrouter_api_key}",
+        "OPENROUTER_MODEL": "${user_config.openrouter_model}",
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${user_config.github_pat}"
+      }
+    }
+  },
+  "user_config": {
+    "openrouter_api_key": {
+      "type": "string",
+      "title": "OpenRouter API key",
+      "description": "Used by the automated slice runner to call LLMs",
+      "sensitive": true
+    },
+    "openrouter_model": {
+      "type": "string",
+      "title": "OpenRouter model",
+      "description": "OpenRouter model ID for automated slice evaluation",
+      "default": "google/gemini-2.5-flash"
+    },
+    "github_pat": {
+      "type": "string",
+      "title": "GitHub Personal Access Token",
+      "description": "Read access to the GitHub repo containing your SKILL.md files",
+      "sensitive": true
+    }
+  }
+}

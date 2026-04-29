@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+# Cancel superseded runs of the same branch — saves CI minutes when a PR is
+# pushed in quick succession.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: build + test (Bun + Vitest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # Bun is the production runtime; pnpm scripts (`pnpm start`, `pnpm dev`)
+      # invoke `bun` directly.
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Vitest workers run as Node processes. The `bun:sqlite` import in
+      # production code is aliased to a `node:sqlite`-backed shim at test
+      # time (see vitest.config.ts and tests/_shims/bun-sqlite.ts), which
+      # requires Node 22+ for stable `node:sqlite`.
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      # pnpm version is taken from package.json's `packageManager` field;
+      # no `version:` here to avoid a duplicate-spec error.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          run_install: false
+
+      - name: Resolve pnpm store path
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      # Wall-clock regression suite. Runs after build/test so a unit-test
+      # failure surfaces first; a slowdown only manifests once the rest is green.
+      - name: Performance regression suite
+        run: bun x vitest run tests/performance.test.ts

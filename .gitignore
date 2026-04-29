@@ -1,0 +1,17 @@
+/dist/
+/dist-mcpb/
+/node_modules/
+/.idea/
+/data/
+.env
+.claude
+
+/skills/
+# Runtime artifacts (server logs, Playwright session snapshots/uploads)
+/logs/
+/.playwright-mcp/
+
+# Local debug dumps (ad-hoc connector / tool inspections)
+/caps.json
+/tools_response.json
+/github_tools.json

@@ -1,0 +1,1525 @@
+{
+  "project": {
+    "id": "model-f8sdd848n",
+    "name": "test",
+    "path": ""
+  },
+  "context": {
+    "id": "context-rjqtbxk5d",
+    "name": "context-1",
+    "description": ""
+  },
+  "outcomeModel": {
+    "id": "activity-khv85hnwg",
+    "name": "activity-1",
+    "description": "",
+    "kpis": [],
+    "systems": []
+  },
+  "slices": [
+    {
+      "id": "slice-pbyogxqvc",
+      "name": "request-top-projects-report",
+      "index": 0,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-fwwz1do9l",
+          "name": "request-top-projects-reported",
+          "role": "customer",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": []
+        }
+      ],
+      "command": {
+        "id": "command-mwf0qwjoi",
+        "name": "report-request-top-projects",
+        "facts": [],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-fwwz1do9l",
+            "name": "request-top-projects-reported",
+            "role": "customer",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": []
+          }
+        ]
+      },
+      "interface": {
+        "id": "interface-wqlkmygts",
+        "name": "report-request-top-projects-interaction",
+        "description": "User initiates a request to get the top 10 projects by budget and send them to Slack",
+        "facts": []
+      },
+      "queries": [],
+      "scenarios": [],
+      "facts": [],
+      "role": "customer",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-7od5rbffg",
+      "name": "get-top-10-projects-by-budget",
+      "index": 1,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-se1ov2f8g",
+          "name": "top-10-projects-budget-got",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": [
+            {
+              "id": "fact-ketxhjw36",
+              "name": "top-projects",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-cwj1zfmn1",
+        "name": "get-top-10-projects-budget",
+        "facts": [
+          {
+            "id": "fact-ketxhjw36",
+            "name": "top-projects",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-se1ov2f8g",
+            "name": "top-10-projects-budget-got",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": [
+              {
+                "id": "fact-ketxhjw36",
+                "name": "top-projects",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "job": {
+          "id": "job-f6c1bcfq2",
+          "name": "get-top-10-projects-by-budget",
+          "toolId": "budget-top",
+          "staticParams": {
+            "limit": 10
+          },
+          "dynamicParams": []
+        },
+        "mode": "job"
+      },
+      "automation": {
+        "id": "automation-fyfjq643x",
+        "name": "get-top-10-projects-budget-automation",
+        "facts": []
+      },
+      "queries": [
+        {
+          "id": "query-j720snsnp",
+          "name": "top-10-projects-budget-got-view",
+          "facts": [],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-fwwz1do9l",
+              "name": "request-top-projects-reported",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": []
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-n6iwwgm05",
+          "given": [
+            {
+              "id": "interactionOutcome-fwwz1do9l",
+              "name": "request-top-projects-reported",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": []
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-cwj1zfmn1",
+            "name": "get-top-10-projects-budget",
+            "facts": [
+              {
+                "id": "fact-ketxhjw36",
+                "name": "top-projects",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-se1ov2f8g",
+                "name": "top-10-projects-budget-got",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "activity-1"
+                },
+                "context": {
+                  "name": "context-1"
+                },
+                "facts": [
+                  {
+                    "id": "fact-ketxhjw36",
+                    "name": "top-projects",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-f6c1bcfq2",
+              "name": "get-top-10-projects-by-budget",
+              "toolId": "budget-top",
+              "staticParams": {
+                "limit": 10
+              },
+              "dynamicParams": []
+            },
+            "mode": "job"
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-se1ov2f8g",
+              "name": "top-10-projects-budget-got",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-ketxhjw36",
+                  "name": "top-projects",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-ketxhjw36",
+          "name": "top-projects",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-v095fh8ty",
+      "name": "format-project-list-for-slack",
+      "index": 2,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-cujsu0tgi",
+          "name": "project-list-slack-formatted",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": [
+            {
+              "id": "fact-8sy8r8lph",
+              "name": "formatted-message",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-8npxcwhc7",
+        "name": "format-project-list-slack",
+        "facts": [
+          {
+            "id": "fact-ketxhjw36",
+            "name": "top-projects",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-8sy8r8lph",
+            "name": "formatted-message",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-cujsu0tgi",
+            "name": "project-list-slack-formatted",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": [
+              {
+                "id": "fact-8sy8r8lph",
+                "name": "formatted-message",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "mode": "instruction",
+        "instruction": "Format the top projects data into a readable Slack message with project names and budget amounts, using bullet points or numbered list format"
+      },
+      "automation": {
+        "id": "automation-6erj8lotw",
+        "name": "format-project-list-slack-automation",
+        "facts": [
+          {
+            "id": "fact-ketxhjw36",
+            "name": "top-projects",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-77pg64kgq",
+          "name": "project-list-slack-formatted-view",
+          "facts": [
+            {
+              "id": "fact-ketxhjw36",
+              "name": "top-projects",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-se1ov2f8g",
+              "name": "top-10-projects-budget-got",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-ketxhjw36",
+                  "name": "top-projects",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-vc6tchkjg",
+          "given": [
+            {
+              "id": "interactionOutcome-se1ov2f8g",
+              "name": "top-10-projects-budget-got",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-ketxhjw36",
+                  "name": "top-projects",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-8npxcwhc7",
+            "name": "format-project-list-slack",
+            "facts": [
+              {
+                "id": "fact-ketxhjw36",
+                "name": "top-projects",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-8sy8r8lph",
+                "name": "formatted-message",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-cujsu0tgi",
+                "name": "project-list-slack-formatted",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "activity-1"
+                },
+                "context": {
+                  "name": "context-1"
+                },
+                "facts": [
+                  {
+                    "id": "fact-8sy8r8lph",
+                    "name": "formatted-message",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "mode": "instruction",
+            "instruction": "Format the top projects data into a readable Slack message with project names and budget amounts, using bullet points or numbered list format"
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-cujsu0tgi",
+              "name": "project-list-slack-formatted",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-8sy8r8lph",
+                  "name": "formatted-message",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-8sy8r8lph",
+          "name": "formatted-message",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-ketxhjw36",
+          "name": "top-projects",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-guf9ngnh7",
+      "name": "list-slack-channels",
+      "index": 3,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-xe3ttyssf",
+          "name": "slack-channels-listed",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": [
+            {
+              "id": "fact-h3lf0z8zw",
+              "name": "channels",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-3e7jbumhl",
+        "name": "slack-channels",
+        "facts": [
+          {
+            "id": "fact-8sy8r8lph",
+            "name": "formatted-message",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-h3lf0z8zw",
+            "name": "channels",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-xe3ttyssf",
+            "name": "slack-channels-listed",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": [
+              {
+                "id": "fact-h3lf0z8zw",
+                "name": "channels",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "job": {
+          "id": "job-sxraglk4z",
+          "name": "list-slack-channels",
+          "toolId": "slack_slack_list_channels",
+          "staticParams": {},
+          "dynamicParams": []
+        },
+        "mode": "job"
+      },
+      "automation": {
+        "id": "automation-kxh7lst6o",
+        "name": "slack-channels-automation",
+        "facts": [
+          {
+            "id": "fact-8sy8r8lph",
+            "name": "formatted-message",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-1tzq9qux6",
+          "name": "slack-channels-view",
+          "facts": [
+            {
+              "id": "fact-8sy8r8lph",
+              "name": "formatted-message",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-cujsu0tgi",
+              "name": "project-list-slack-formatted",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-8sy8r8lph",
+                  "name": "formatted-message",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-08ojn1mj0",
+          "given": [
+            {
+              "id": "interactionOutcome-cujsu0tgi",
+              "name": "project-list-slack-formatted",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-8sy8r8lph",
+                  "name": "formatted-message",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-3e7jbumhl",
+            "name": "slack-channels",
+            "facts": [
+              {
+                "id": "fact-8sy8r8lph",
+                "name": "formatted-message",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-h3lf0z8zw",
+                "name": "channels",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-xe3ttyssf",
+                "name": "slack-channels-listed",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "activity-1"
+                },
+                "context": {
+                  "name": "context-1"
+                },
+                "facts": [
+                  {
+                    "id": "fact-h3lf0z8zw",
+                    "name": "channels",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-sxraglk4z",
+              "name": "list-slack-channels",
+              "toolId": "slack_slack_list_channels",
+              "staticParams": {},
+              "dynamicParams": []
+            },
+            "mode": "job"
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-xe3ttyssf",
+              "name": "slack-channels-listed",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-h3lf0z8zw",
+                  "name": "channels",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-h3lf0z8zw",
+          "name": "channels",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-8sy8r8lph",
+          "name": "formatted-message",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-3emzsj2jj",
+      "name": "find-general-channel-id",
+      "index": 4,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-qtdwtlbnf",
+          "name": "general-channel-id-found",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": [
+            {
+              "id": "fact-urmtqapa7",
+              "name": "general-channel-id",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-9t234subz",
+        "name": "find-general-channel-id",
+        "facts": [
+          {
+            "id": "fact-urmtqapa7",
+            "name": "general-channel-id",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-h3lf0z8zw",
+            "name": "channels",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-qtdwtlbnf",
+            "name": "general-channel-id-found",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": [
+              {
+                "id": "fact-urmtqapa7",
+                "name": "general-channel-id",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "mode": "instruction",
+        "instruction": "Extract the channel ID for the 'general' channel from the channels list"
+      },
+      "automation": {
+        "id": "automation-pxicvm72v",
+        "name": "find-general-channel-id-automation",
+        "facts": [
+          {
+            "id": "fact-h3lf0z8zw",
+            "name": "channels",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-3lznat8v4",
+          "name": "general-channel-id-view",
+          "facts": [
+            {
+              "id": "fact-h3lf0z8zw",
+              "name": "channels",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-xe3ttyssf",
+              "name": "slack-channels-listed",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-h3lf0z8zw",
+                  "name": "channels",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-i8s0y1pom",
+          "given": [
+            {
+              "id": "interactionOutcome-xe3ttyssf",
+              "name": "slack-channels-listed",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-h3lf0z8zw",
+                  "name": "channels",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-9t234subz",
+            "name": "find-general-channel-id",
+            "facts": [
+              {
+                "id": "fact-urmtqapa7",
+                "name": "general-channel-id",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-h3lf0z8zw",
+                "name": "channels",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-qtdwtlbnf",
+                "name": "general-channel-id-found",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "activity-1"
+                },
+                "context": {
+                  "name": "context-1"
+                },
+                "facts": [
+                  {
+                    "id": "fact-urmtqapa7",
+                    "name": "general-channel-id",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "mode": "instruction",
+            "instruction": "Extract the channel ID for the 'general' channel from the channels list"
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-qtdwtlbnf",
+              "name": "general-channel-id-found",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-urmtqapa7",
+                  "name": "general-channel-id",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-urmtqapa7",
+          "name": "general-channel-id",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-h3lf0z8zw",
+          "name": "channels",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-aqizqyg32",
+      "name": "post-message-to-general-channel",
+      "index": 5,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-ebege804q",
+          "name": "post-general-channel-messaged",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "activity-1"
+          },
+          "context": {
+            "name": "context-1"
+          },
+          "facts": [
+            {
+              "id": "fact-a2cv3nemy",
+              "name": "message-result",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-4iccmw9nf",
+        "name": "message-post-general-channel",
+        "facts": [
+          {
+            "id": "fact-8sy8r8lph",
+            "name": "formatted-message",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-urmtqapa7",
+            "name": "general-channel-id",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-a2cv3nemy",
+            "name": "message-result",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-ebege804q",
+            "name": "post-general-channel-messaged",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "activity-1"
+            },
+            "context": {
+              "name": "context-1"
+            },
+            "facts": [
+              {
+                "id": "fact-a2cv3nemy",
+                "name": "message-result",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "job": {
+          "id": "job-1h4yh1ufn",
+          "name": "post-message-to-general-channel",
+          "inputMappings": {
+            "channel_id": "fact-urmtqapa7",
+            "text": "fact-8sy8r8lph"
+          },
+          "toolId": "slack_slack_post_message",
+          "staticParams": {},
+          "dynamicParams": [
+            "channel_id",
+            "text"
+          ]
+        },
+        "mode": "job"
+      },
+      "automation": {
+        "id": "automation-x4dkahbvj",
+        "name": "message-post-general-channel-automation",
+        "facts": [
+          {
+            "id": "fact-8sy8r8lph",
+            "name": "formatted-message",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-urmtqapa7",
+            "name": "general-channel-id",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-sfm5j53ge",
+          "name": "post-general-channel-messaged-view",
+          "facts": [
+            {
+              "id": "fact-8sy8r8lph",
+              "name": "formatted-message",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-urmtqapa7",
+              "name": "general-channel-id",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-qtdwtlbnf",
+              "name": "general-channel-id-found",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-urmtqapa7",
+                  "name": "general-channel-id",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-cujsu0tgi",
+              "name": "project-list-slack-formatted",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-8sy8r8lph",
+                  "name": "formatted-message",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-45sc5obed",
+          "given": [
+            {
+              "id": "interactionOutcome-qtdwtlbnf",
+              "name": "general-channel-id-found",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-urmtqapa7",
+                  "name": "general-channel-id",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-cujsu0tgi",
+              "name": "project-list-slack-formatted",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-8sy8r8lph",
+                  "name": "formatted-message",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-4iccmw9nf",
+            "name": "message-post-general-channel",
+            "facts": [
+              {
+                "id": "fact-8sy8r8lph",
+                "name": "formatted-message",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-urmtqapa7",
+                "name": "general-channel-id",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-a2cv3nemy",
+                "name": "message-result",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-ebege804q",
+                "name": "post-general-channel-messaged",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "activity-1"
+                },
+                "context": {
+                  "name": "context-1"
+                },
+                "facts": [
+                  {
+                    "id": "fact-a2cv3nemy",
+                    "name": "message-result",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-1h4yh1ufn",
+              "name": "post-message-to-general-channel",
+              "inputMappings": {
+                "channel_id": "fact-urmtqapa7",
+                "text": "fact-8sy8r8lph"
+              },
+              "toolId": "slack_slack_post_message",
+              "staticParams": {},
+              "dynamicParams": [
+                "channel_id",
+                "text"
+              ]
+            },
+            "mode": "job"
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-ebege804q",
+              "name": "post-general-channel-messaged",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "activity-1"
+              },
+              "context": {
+                "name": "context-1"
+              },
+              "facts": [
+                {
+                  "id": "fact-a2cv3nemy",
+                  "name": "message-result",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-a2cv3nemy",
+          "name": "message-result",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-8sy8r8lph",
+          "name": "formatted-message",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-urmtqapa7",
+          "name": "general-channel-id",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    }
+  ],
+  "governance": {
+    "owner": "4fab728a-67a9-41e6-8710-cc9912a788ab",
+    "status": "Draft",
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-21T03:22:23.660Z",
+    "compliance": [],
+    "visibility": "internal"
+  },
+  "exportedAt": "2026-04-21T03:22:35.162Z",
+  "version": "1.0.0"
+}

@@ -1,0 +1,1739 @@
+{
+  "project": {
+    "id": "model-00s4ma6li",
+    "name": "customer-discount-allocation-demo",
+    "path": ""
+  },
+  "context": {
+    "id": "context-u92rrguwd",
+    "name": "sales",
+    "description": ""
+  },
+  "outcomeModel": {
+    "id": "activity-922szwsc8",
+    "name": "process-tiered-customer-discount",
+    "description": "Calculates and applies order discounts based on customer tier and order value, ensuring consistent and accurate discount handling.",
+    "kpis": [
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      }
+    ],
+    "systems": [
+      {
+        "name": "",
+        "type": "buy"
+      },
+      {
+        "name": "",
+        "type": "buy"
+      }
+    ]
+  },
+  "slices": [
+    {
+      "id": "slice-hyaqq1q18",
+      "name": "request-discount",
+      "index": 0,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-8sksnw7pr",
+          "name": "discount-requested",
+          "role": "customer",
+          "outcomeStream": "",
+          "activity": {
+            "name": "process-tiered-customer-discount"
+          },
+          "context": {
+            "name": "sales"
+          },
+          "facts": [
+            {
+              "id": "fact-aehrolpru",
+              "name": "customer-id",
+              "valueType": "identifier",
+              "testValue": "cust-1111",
+              "defaultValue": "cust-1234",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-cdayhpo1g",
+              "name": "order-value",
+              "valueType": "numeric",
+              "testValue": "$49.99",
+              "defaultValue": "$0",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-sfmwihktx",
+        "name": "request-discount",
+        "facts": [
+          {
+            "id": "fact-aehrolpru",
+            "name": "customer-id",
+            "valueType": "identifier",
+            "testValue": "cust-1111",
+            "defaultValue": "cust-1234",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-cdayhpo1g",
+            "name": "order-value",
+            "valueType": "numeric",
+            "testValue": "$49.99",
+            "defaultValue": "$0",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-8sksnw7pr",
+            "name": "discount-requested",
+            "role": "customer",
+            "outcomeStream": "",
+            "activity": {
+              "name": "process-tiered-customer-discount"
+            },
+            "context": {
+              "name": "sales"
+            },
+            "facts": [
+              {
+                "id": "fact-aehrolpru",
+                "name": "customer-id",
+                "valueType": "identifier",
+                "testValue": "cust-1111",
+                "defaultValue": "cust-1234",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ]
+      },
+      "interface": {
+        "id": "interface-lwcurxwjt",
+        "name": "request-discount-interaction",
+        "description": "",
+        "facts": [
+          {
+            "id": "fact-aehrolpru",
+            "name": "customer-id",
+            "valueType": "identifier",
+            "testValue": "cust-1111",
+            "defaultValue": "cust-1234",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-cdayhpo1g",
+            "name": "order-value",
+            "valueType": "numeric",
+            "testValue": "$49.99",
+            "defaultValue": "$0",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [],
+      "scenarios": [
+        {
+          "id": "scenario-sjkqbshfp",
+          "given": [],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-sfmwihktx",
+            "name": "request-discount",
+            "facts": [
+              {
+                "id": "fact-aehrolpru",
+                "name": "customer-id",
+                "valueType": "identifier",
+                "testValue": "cust-1111",
+                "defaultValue": "cust-1234",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-8sksnw7pr",
+                "name": "discount-requested",
+                "role": "customer",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-aehrolpru",
+                    "name": "customer-id",
+                    "valueType": "identifier",
+                    "testValue": "cust-1111",
+                    "defaultValue": "cust-1234",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-cdayhpo1g",
+                    "name": "order-value",
+                    "valueType": "numeric",
+                    "testValue": "$49.99",
+                    "defaultValue": "$0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-wqpbqtfch",
+              "factId": "fact-aehrolpru",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-v4t2vqg5q",
+              "factId": "fact-cdayhpo1g",
+              "operator": "is greater than",
+              "value": "0",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-8sksnw7pr",
+              "name": "discount-requested",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-aehrolpru",
+                  "name": "customer-id",
+                  "valueType": "identifier",
+                  "testValue": "cust-1111",
+                  "defaultValue": "cust-1234",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-vdex253a7",
+          "given": [],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-sfmwihktx",
+            "name": "request-discount",
+            "facts": [
+              {
+                "id": "fact-aehrolpru",
+                "name": "customer-id",
+                "valueType": "identifier",
+                "testValue": "cust-1111",
+                "defaultValue": "cust-1234",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-8sksnw7pr",
+                "name": "discount-requested",
+                "role": "customer",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-aehrolpru",
+                    "name": "customer-id",
+                    "valueType": "identifier",
+                    "testValue": "cust-1111",
+                    "defaultValue": "cust-1234",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-cdayhpo1g",
+                    "name": "order-value",
+                    "valueType": "numeric",
+                    "testValue": "$49.99",
+                    "defaultValue": "$0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-e9gchw5jq",
+              "factId": "fact-aehrolpru",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-ybvkupjyi",
+              "factId": "fact-cdayhpo1g",
+              "operator": "is less than",
+              "value": "0",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "OR",
+          "then": [],
+          "error": "customerID is required and order value must be above $0"
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-aehrolpru",
+          "name": "customer-id",
+          "valueType": "identifier",
+          "testValue": "cust-1111",
+          "defaultValue": "cust-1234",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-cdayhpo1g",
+          "name": "order-value",
+          "valueType": "numeric",
+          "testValue": "$49.99",
+          "defaultValue": "$0",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "customer",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-ymtdljbqq",
+      "name": "identify-customer-tier",
+      "index": 1,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-foqyk6bh3",
+          "name": "customer-tier-identified",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "process-tiered-customer-discount"
+          },
+          "context": {
+            "name": "sales"
+          },
+          "facts": [
+            {
+              "id": "fact-cdayhpo1g",
+              "name": "order-value",
+              "valueType": "numeric",
+              "testValue": "$49.99",
+              "defaultValue": "$0",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-ticffxsw4",
+              "name": "customer-details",
+              "valueType": "customer-details",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-4uicd499y",
+        "name": "identify-customer-tier",
+        "facts": [
+          {
+            "id": "fact-cdayhpo1g",
+            "name": "order-value",
+            "valueType": "numeric",
+            "testValue": "$49.99",
+            "defaultValue": "$0",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-ticffxsw4",
+            "name": "customer-details",
+            "valueType": "customer-details",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-foqyk6bh3",
+            "name": "customer-tier-identified",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "process-tiered-customer-discount"
+            },
+            "context": {
+              "name": "sales"
+            },
+            "facts": [
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-ticffxsw4",
+                "name": "customer-details",
+                "valueType": "customer-details",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ],
+        "job": {
+          "id": "job-ac3nx2pr9",
+          "name": "get-customer-details",
+          "returnedFact": {
+            "id": "fact-ticffxsw4",
+            "name": "customer-details",
+            "valueType": "customer-details",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false
+          },
+          "inputMappings": {
+            "find": "fact-aehrolpru"
+          },
+          "toolId": "json-read",
+          "staticParams": {
+            "collection": "users",
+            "searchField": "id"
+          },
+          "dynamicParams": [
+            "find",
+            "returns"
+          ]
+        }
+      },
+      "automation": {
+        "id": "automation-5cg8zkqwo",
+        "name": "identify-customer-tier-automation",
+        "facts": [
+          {
+            "id": "fact-cdayhpo1g",
+            "name": "order-value",
+            "valueType": "numeric",
+            "testValue": "$49.99",
+            "defaultValue": "$0",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-e3gfl5lh1",
+          "name": "customer-tier-identified-view",
+          "facts": [
+            {
+              "id": "fact-cdayhpo1g",
+              "name": "order-value",
+              "valueType": "numeric",
+              "testValue": "$49.99",
+              "defaultValue": "$0",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-8sksnw7pr",
+              "name": "discount-requested",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-aehrolpru",
+                  "name": "customer-id",
+                  "valueType": "identifier",
+                  "testValue": "cust-1111",
+                  "defaultValue": "cust-1234",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-1l9uoshs6",
+          "given": [
+            {
+              "id": "interactionOutcome-8sksnw7pr",
+              "name": "discount-requested",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-aehrolpru",
+                  "name": "customer-id",
+                  "valueType": "identifier",
+                  "testValue": "cust-1111",
+                  "defaultValue": "cust-1234",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-4uicd499y",
+            "name": "identify-customer-tier",
+            "facts": [
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-ticffxsw4",
+                "name": "customer-details",
+                "valueType": "customer-details",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-foqyk6bh3",
+                "name": "customer-tier-identified",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-cdayhpo1g",
+                    "name": "order-value",
+                    "valueType": "numeric",
+                    "testValue": "$49.99",
+                    "defaultValue": "$0",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-ticffxsw4",
+                    "name": "customer-details",
+                    "valueType": "customer-details",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-ac3nx2pr9",
+              "name": "get-customer-details",
+              "returnedFact": {
+                "id": "fact-ticffxsw4",
+                "name": "customer-details",
+                "valueType": "customer-details",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false
+              },
+              "inputMappings": {
+                "find": "fact-aehrolpru"
+              },
+              "toolId": "json-read",
+              "staticParams": {
+                "collection": "users",
+                "searchField": "id"
+              },
+              "dynamicParams": [
+                "find",
+                "returns"
+              ]
+            }
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-k8eei06ks",
+              "factId": "fact-ticffxsw4",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-ot3sgvrcn",
+          "given": [
+            {
+              "id": "interactionOutcome-8sksnw7pr",
+              "name": "discount-requested",
+              "role": "customer",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-aehrolpru",
+                  "name": "customer-id",
+                  "valueType": "identifier",
+                  "testValue": "cust-1111",
+                  "defaultValue": "cust-1234",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-4uicd499y",
+            "name": "identify-customer-tier",
+            "facts": [
+              {
+                "id": "fact-cdayhpo1g",
+                "name": "order-value",
+                "valueType": "numeric",
+                "testValue": "$49.99",
+                "defaultValue": "$0",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-ticffxsw4",
+                "name": "customer-details",
+                "valueType": "customer-details",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-foqyk6bh3",
+                "name": "customer-tier-identified",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-cdayhpo1g",
+                    "name": "order-value",
+                    "valueType": "numeric",
+                    "testValue": "$49.99",
+                    "defaultValue": "$0",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-ticffxsw4",
+                    "name": "customer-details",
+                    "valueType": "customer-details",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-ac3nx2pr9",
+              "name": "get-customer-details",
+              "returnedFact": {
+                "id": "fact-ticffxsw4",
+                "name": "customer-details",
+                "valueType": "customer-details",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false
+              },
+              "inputMappings": {
+                "find": "fact-aehrolpru"
+              },
+              "toolId": "json-read",
+              "staticParams": {
+                "collection": "users",
+                "searchField": "id"
+              },
+              "dynamicParams": [
+                "find",
+                "returns"
+              ]
+            }
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-k8eei06ks",
+              "factId": "fact-ticffxsw4",
+              "operator": "is empty",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": "Customer Tier not Found"
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-cdayhpo1g",
+          "name": "order-value",
+          "valueType": "numeric",
+          "testValue": "$49.99",
+          "defaultValue": "$0",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-ticffxsw4",
+          "name": "customer-details",
+          "valueType": "customer-details",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-aehrolpru",
+          "name": "customer-id",
+          "valueType": "identifier",
+          "testValue": "cust-1111",
+          "defaultValue": "cust-1234",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-mlzuqv739",
+      "name": "discount",
+      "index": 2,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-uvk01uhlc",
+          "name": "discount-calculated",
+          "role": "system",
+          "outcomeStream": "",
+          "activity": {
+            "name": "process-tiered-customer-discount"
+          },
+          "context": {
+            "name": "sales"
+          },
+          "facts": [
+            {
+              "id": "fact-fotoockyk",
+              "name": "discount-percentage",
+              "valueType": "numeric",
+              "testValue": "15",
+              "defaultValue": "0",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-6el2wguyv",
+        "name": "discount",
+        "facts": [
+          {
+            "id": "fact-fotoockyk",
+            "name": "discount-percentage",
+            "valueType": "numeric",
+            "testValue": "15",
+            "defaultValue": "0",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-uvk01uhlc",
+            "name": "discount-calculated",
+            "role": "system",
+            "outcomeStream": "",
+            "activity": {
+              "name": "process-tiered-customer-discount"
+            },
+            "context": {
+              "name": "sales"
+            },
+            "facts": [
+              {
+                "id": "fact-fotoockyk",
+                "name": "discount-percentage",
+                "valueType": "numeric",
+                "testValue": "15",
+                "defaultValue": "0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ]
+      },
+      "automation": {
+        "id": "automation-whhstsqua",
+        "name": "discount-automation",
+        "facts": [
+          {
+            "id": "fact-cdayhpo1g",
+            "name": "order-value",
+            "valueType": "numeric",
+            "testValue": "$49.99",
+            "defaultValue": "$0",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-ticffxsw4",
+            "name": "customer-details",
+            "valueType": "customer-details",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-d7lgiv0b3",
+          "name": "discount-calculated-view",
+          "facts": [
+            {
+              "id": "fact-cdayhpo1g",
+              "name": "order-value",
+              "valueType": "numeric",
+              "testValue": "$49.99",
+              "defaultValue": "$0",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-ticffxsw4",
+              "name": "customer-details",
+              "valueType": "customer-details",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-99hdsgwk5",
+          "given": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-6el2wguyv",
+            "name": "discount",
+            "facts": [
+              {
+                "id": "fact-fotoockyk",
+                "name": "discount-percentage",
+                "valueType": "numeric",
+                "testValue": "15",
+                "defaultValue": "0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-uvk01uhlc",
+                "name": "discount-calculated",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-fotoockyk",
+                    "name": "discount-percentage",
+                    "valueType": "numeric",
+                    "testValue": "15",
+                    "defaultValue": "0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-y6mpa5mli",
+              "factId": "fact-ticffxsw4",
+              "operator": "equals",
+              "value": "VIP",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "20"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-kph4znyky",
+          "given": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-6el2wguyv",
+            "name": "discount",
+            "facts": [
+              {
+                "id": "fact-fotoockyk",
+                "name": "discount-percentage",
+                "valueType": "numeric",
+                "testValue": "15",
+                "defaultValue": "0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-uvk01uhlc",
+                "name": "discount-calculated",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-fotoockyk",
+                    "name": "discount-percentage",
+                    "valueType": "numeric",
+                    "testValue": "15",
+                    "defaultValue": "0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-y6mpa5mli",
+              "factId": "fact-ticffxsw4",
+              "operator": "equals",
+              "value": "Member",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            },
+            {
+              "id": "rule-inojeyl4k",
+              "factId": "fact-cdayhpo1g",
+              "operator": "is greater than or equal to",
+              "value": "50",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "10"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-5bm1mm5id",
+          "given": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-6el2wguyv",
+            "name": "discount",
+            "facts": [
+              {
+                "id": "fact-fotoockyk",
+                "name": "discount-percentage",
+                "valueType": "numeric",
+                "testValue": "15",
+                "defaultValue": "0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-uvk01uhlc",
+                "name": "discount-calculated",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-fotoockyk",
+                    "name": "discount-percentage",
+                    "valueType": "numeric",
+                    "testValue": "15",
+                    "defaultValue": "0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-y6mpa5mli",
+              "factId": "fact-ticffxsw4",
+              "operator": "equals",
+              "value": "Member",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            },
+            {
+              "id": "rule-inojeyl4k",
+              "factId": "fact-cdayhpo1g",
+              "operator": "is less than",
+              "value": "50",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "0"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-1z3amb70q",
+          "given": [
+            {
+              "id": "interactionOutcome-foqyk6bh3",
+              "name": "customer-tier-identified",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-cdayhpo1g",
+                  "name": "order-value",
+                  "valueType": "numeric",
+                  "testValue": "$49.99",
+                  "defaultValue": "$0",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-ticffxsw4",
+                  "name": "customer-details",
+                  "valueType": "customer-details",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-6el2wguyv",
+            "name": "discount",
+            "facts": [
+              {
+                "id": "fact-fotoockyk",
+                "name": "discount-percentage",
+                "valueType": "numeric",
+                "testValue": "15",
+                "defaultValue": "0",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-uvk01uhlc",
+                "name": "discount-calculated",
+                "role": "system",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "process-tiered-customer-discount"
+                },
+                "context": {
+                  "name": "sales"
+                },
+                "facts": [
+                  {
+                    "id": "fact-fotoockyk",
+                    "name": "discount-percentage",
+                    "valueType": "numeric",
+                    "testValue": "15",
+                    "defaultValue": "0",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-y6mpa5mli",
+              "factId": "fact-ticffxsw4",
+              "operator": "equals",
+              "value": "Guest",
+              "evaluationMode": "deterministic",
+              "factField": "tier"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "0"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-fotoockyk",
+          "name": "discount-percentage",
+          "valueType": "numeric",
+          "testValue": "15",
+          "defaultValue": "0",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-cdayhpo1g",
+          "name": "order-value",
+          "valueType": "numeric",
+          "testValue": "$49.99",
+          "defaultValue": "$0",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-ticffxsw4",
+          "name": "customer-details",
+          "valueType": "customer-details",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "system",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-79zmgkz45",
+      "name": "discount-calculated-view",
+      "index": 3,
+      "outcomes": [],
+      "interface": {
+        "id": "interface-rwer16htq",
+        "name": "discount-interaction",
+        "description": "",
+        "facts": [
+          {
+            "id": "fact-fotoockyk",
+            "name": "discount-percentage",
+            "valueType": "numeric",
+            "testValue": "15",
+            "defaultValue": "0",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-qep56dje0",
+          "name": "discount-calculated-view",
+          "facts": [
+            {
+              "id": "fact-fotoockyk",
+              "name": "discount-percentage",
+              "valueType": "numeric",
+              "testValue": "15",
+              "defaultValue": "0",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-iknn85muh",
+          "given": [
+            {
+              "id": "interactionOutcome-uvk01uhlc",
+              "name": "discount-calculated",
+              "role": "system",
+              "outcomeStream": "",
+              "activity": {
+                "name": "process-tiered-customer-discount"
+              },
+              "context": {
+                "name": "sales"
+              },
+              "facts": [
+                {
+                  "id": "fact-fotoockyk",
+                  "name": "discount-percentage",
+                  "valueType": "numeric",
+                  "testValue": "15",
+                  "defaultValue": "0",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-xtb9xi5sp",
+              "factId": "fact-fotoockyk",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": ""
+        },
+        {
+          "id": "scenario-jpquasal4",
+          "given": [],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-5hq064204",
+              "factId": "fact-fotoockyk",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": "Discount Calculation unsuccessful, inform customer they may need to try again"
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-fotoockyk",
+          "name": "discount-percentage",
+          "valueType": "numeric",
+          "testValue": "15",
+          "defaultValue": "0",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "",
+      "outcomeStream": ""
+    }
+  ],
+  "governance": {
+    "owner": "69ed62b0-aa66-4fd9-bea0-78f54186bd9f",
+    "status": "Draft",
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-13T03:31:11.503Z",
+    "compliance": [],
+    "visibility": "internal"
+  },
+  "exportedAt": "2026-04-13T03:31:34.822Z",
+  "version": "1.0.0"
+}

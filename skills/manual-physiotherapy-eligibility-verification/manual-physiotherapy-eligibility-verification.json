@@ -1,0 +1,3705 @@
+{
+  "project": {
+    "id": "model-b2pajlut9",
+    "name": "sop-099-h-manual-physiotherapy-eligibility-verification",
+    "path": ""
+  },
+  "context": {
+    "id": "context-y6r1fkbnz",
+    "name": "eligibility-verification",
+    "description": ""
+  },
+  "outcomeModel": {
+    "id": "activity-zadydcwhc",
+    "name": "manual-physiotherapy-eligibility-verification",
+    "description": "Ensures accurate physiotherapy coverage decisions by identifying and resolving 'Logic Gaps' between member claims and policy constraints, leading to correct approvals, declines, or escalations.",
+    "kpis": [
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      }
+    ],
+    "systems": [
+      {
+        "name": "",
+        "type": "buy"
+      }
+    ]
+  },
+  "slices": [
+    {
+      "id": "slice-tc18qxmai",
+      "name": "receive-member-claim",
+      "index": 0,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-hf08366p1",
+          "name": "member-physio-claim-received",
+          "role": "claims-processor",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-h64eelso9",
+              "name": "claim-id",
+              "valueType": "identifier",
+              "testValue": "CLM12345",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-k0z8d3cbp",
+              "name": "member-id",
+              "valueType": "identifier",
+              "testValue": "MEM98765",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-uxnj86x9l",
+              "name": "service-date",
+              "valueType": "date",
+              "testValue": "2023-10-26",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-4rnvuudxl",
+        "name": "receive-member-claim",
+        "facts": [
+          {
+            "id": "fact-h64eelso9",
+            "name": "claim-id",
+            "valueType": "identifier",
+            "testValue": "CLM12345",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-k0z8d3cbp",
+            "name": "member-id",
+            "valueType": "identifier",
+            "testValue": "MEM98765",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-uxnj86x9l",
+            "name": "service-date",
+            "valueType": "date",
+            "testValue": "2023-10-26",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-hf08366p1",
+            "name": "member-physio-claim-received",
+            "role": "claims-processor",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-h64eelso9",
+                "name": "claim-id",
+                "valueType": "identifier",
+                "testValue": "CLM12345",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-uxnj86x9l",
+                "name": "service-date",
+                "valueType": "date",
+                "testValue": "2023-10-26",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ]
+      },
+      "interface": {
+        "id": "interface-q5momyee6",
+        "name": "receive-member-claim-interaction",
+        "description": "\"I need physio\", \"I want to make a claim\"",
+        "facts": [
+          {
+            "id": "fact-h64eelso9",
+            "name": "claim-id",
+            "valueType": "identifier",
+            "testValue": "CLM12345",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-k0z8d3cbp",
+            "name": "member-id",
+            "valueType": "identifier",
+            "testValue": "MEM98765",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-uxnj86x9l",
+            "name": "service-date",
+            "valueType": "date",
+            "testValue": "2023-10-26",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [],
+      "scenarios": [
+        {
+          "id": "scenario-dcore9yif",
+          "given": [],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-4rnvuudxl",
+            "name": "receive-member-claim",
+            "facts": [
+              {
+                "id": "fact-h64eelso9",
+                "name": "claim-id",
+                "valueType": "identifier",
+                "testValue": "CLM12345",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-uxnj86x9l",
+                "name": "service-date",
+                "valueType": "date",
+                "testValue": "2023-10-26",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-hf08366p1",
+                "name": "member-physio-claim-received",
+                "role": "claims-processor",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-h64eelso9",
+                    "name": "claim-id",
+                    "valueType": "identifier",
+                    "testValue": "CLM12345",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-k0z8d3cbp",
+                    "name": "member-id",
+                    "valueType": "identifier",
+                    "testValue": "MEM98765",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-uxnj86x9l",
+                    "name": "service-date",
+                    "valueType": "date",
+                    "testValue": "2023-10-26",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-pxdrognwg",
+              "factId": "fact-h64eelso9",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-9tj31rppm",
+              "factId": "fact-k0z8d3cbp",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-zm0us72td",
+              "factId": "fact-uxnj86x9l",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": "Invalid query, clarify inputs"
+        },
+        {
+          "id": "scenario-ks9292hnt",
+          "given": [],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-4rnvuudxl",
+            "name": "receive-member-claim",
+            "facts": [
+              {
+                "id": "fact-h64eelso9",
+                "name": "claim-id",
+                "valueType": "identifier",
+                "testValue": "CLM12345",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-uxnj86x9l",
+                "name": "service-date",
+                "valueType": "date",
+                "testValue": "2023-10-26",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-hf08366p1",
+                "name": "member-physio-claim-received",
+                "role": "claims-processor",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-h64eelso9",
+                    "name": "claim-id",
+                    "valueType": "identifier",
+                    "testValue": "CLM12345",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-k0z8d3cbp",
+                    "name": "member-id",
+                    "valueType": "identifier",
+                    "testValue": "MEM98765",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-uxnj86x9l",
+                    "name": "service-date",
+                    "valueType": "date",
+                    "testValue": "2023-10-26",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-86t2fz3mj",
+              "factId": "fact-h64eelso9",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-9x706gsjz",
+              "factId": "fact-uxnj86x9l",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-6t2v9vjyr",
+              "factId": "fact-k0z8d3cbp",
+              "operator": "is not empty",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-hf08366p1",
+              "name": "member-physio-claim-received",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-h64eelso9",
+                  "name": "claim-id",
+                  "valueType": "identifier",
+                  "testValue": "CLM12345",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-uxnj86x9l",
+                  "name": "service-date",
+                  "valueType": "date",
+                  "testValue": "2023-10-26",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-h64eelso9",
+          "name": "claim-id",
+          "valueType": "identifier",
+          "testValue": "CLM12345",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-k0z8d3cbp",
+          "name": "member-id",
+          "valueType": "identifier",
+          "testValue": "MEM98765",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-uxnj86x9l",
+          "name": "service-date",
+          "valueType": "date",
+          "testValue": "2023-10-26",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "claims-processor",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-nog4bb80t",
+      "name": "review-policy-constraints",
+      "index": 1,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-8n2kubdzc",
+          "name": "member-policy-reviewed",
+          "role": "policy-analyst",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-f4mrfua5v",
+              "name": "covered-under-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            },
+            {
+              "id": "fact-k181oadwj",
+              "name": "exception-queried",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            }
+          ]
+        },
+        {
+          "id": "interactionOutcome-9wfajp9nm",
+          "name": "exception-required-for-policy",
+          "role": "policy-analyst",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-pmbgxfatj",
+              "name": "valid-exceptions-for-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": true,
+              "isCalculated": true,
+              "expression": ""
+            }
+          ]
+        },
+        {
+          "id": "interactionOutcome-nsznitltx",
+          "name": "member-account-suspended",
+          "role": "policy-analyst",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-k0z8d3cbp",
+              "name": "member-id",
+              "valueType": "identifier",
+              "testValue": "MEM98765",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-rlbecfj6k",
+              "name": "account-suspended",
+              "valueType": "",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-zy70lc5tk",
+        "name": "review-policy-constraints",
+        "facts": [
+          {
+            "id": "fact-k0z8d3cbp",
+            "name": "member-id",
+            "valueType": "identifier",
+            "testValue": "MEM98765",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-7f9fh6s0g",
+            "name": "collected-user-information",
+            "valueType": "user-data",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false,
+            "fields": [
+              {
+                "name": "join-date",
+                "valueType": "date-time"
+              },
+              {
+                "name": "account-status",
+                "valueType": "text"
+              },
+              {
+                "name": "plan-type",
+                "valueType": "text"
+              }
+            ]
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-8n2kubdzc",
+            "name": "member-policy-reviewed",
+            "role": "policy-analyst",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-f4mrfua5v",
+                "name": "covered-under-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": true,
+                "expression": ""
+              },
+              {
+                "id": "fact-k181oadwj",
+                "name": "exception-queried",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": true,
+                "expression": ""
+              }
+            ]
+          },
+          {
+            "id": "interactionOutcome-9wfajp9nm",
+            "name": "exception-required-for-policy",
+            "role": "policy-analyst",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-pmbgxfatj",
+                "name": "valid-exceptions-for-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": true,
+                "isCalculated": true,
+                "expression": ""
+              }
+            ]
+          },
+          {
+            "id": "interactionOutcome-nsznitltx",
+            "name": "member-account-suspended",
+            "role": "policy-analyst",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-rlbecfj6k",
+                "name": "account-suspended",
+                "valueType": "",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": true,
+                "expression": ""
+              }
+            ]
+          }
+        ],
+        "job": {
+          "id": "job-7pckhughu",
+          "name": "query-user-join-date",
+          "returnedFact": {
+            "id": "fact-7f9fh6s0g",
+            "name": "collected-user-information",
+            "valueType": "user-data",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "fields": [
+              {
+                "name": "join-date",
+                "valueType": "date-time"
+              },
+              {
+                "name": "account-status",
+                "valueType": "text"
+              },
+              {
+                "name": "plan-type",
+                "valueType": "text"
+              }
+            ]
+          },
+          "inputMappings": {
+            "find": "fact-k0z8d3cbp"
+          },
+          "toolId": "json-read",
+          "staticParams": {
+            "collection": "members",
+            "searchField": "member-id",
+            "returns": "member"
+          },
+          "dynamicParams": [
+            "find"
+          ]
+        }
+      },
+      "automation": {
+        "id": "automation-banvyt64r",
+        "name": "review-policy-constraints-automation",
+        "facts": [
+          {
+            "id": "fact-k0z8d3cbp",
+            "name": "member-id",
+            "valueType": "identifier",
+            "testValue": "MEM98765",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-uxnj86x9l",
+            "name": "service-date",
+            "valueType": "date",
+            "testValue": "2023-10-26",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "job": {
+          "id": "job-7pckhughu",
+          "name": "query-user-join-date",
+          "returnedFact": {
+            "id": "fact-7f9fh6s0g",
+            "name": "collected-user-information",
+            "valueType": "user-data",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "fields": [
+              {
+                "name": "join-date",
+                "valueType": "date-time"
+              },
+              {
+                "name": "account-status",
+                "valueType": "text"
+              },
+              {
+                "name": "plan-type",
+                "valueType": "text"
+              }
+            ]
+          },
+          "inputMappings": {
+            "find": "fact-k0z8d3cbp"
+          },
+          "toolId": "json-read",
+          "staticParams": {
+            "collection": "members",
+            "searchField": "member-id",
+            "returns": "member"
+          },
+          "dynamicParams": [
+            "find"
+          ]
+        }
+      },
+      "queries": [
+        {
+          "id": "query-59or6pckz",
+          "name": "policy-constraints-view",
+          "facts": [
+            {
+              "id": "fact-k0z8d3cbp",
+              "name": "member-id",
+              "valueType": "identifier",
+              "testValue": "MEM98765",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-uxnj86x9l",
+              "name": "service-date",
+              "valueType": "date",
+              "testValue": "2023-10-26",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-hf08366p1",
+              "name": "member-physio-claim-received",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-h64eelso9",
+                  "name": "claim-id",
+                  "valueType": "identifier",
+                  "testValue": "CLM12345",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-uxnj86x9l",
+                  "name": "service-date",
+                  "valueType": "date",
+                  "testValue": "2023-10-26",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-5f9n4l8fs",
+          "given": [
+            {
+              "id": "interactionOutcome-hf08366p1",
+              "name": "member-physio-claim-received",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-h64eelso9",
+                  "name": "claim-id",
+                  "valueType": "identifier",
+                  "testValue": "CLM12345",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-uxnj86x9l",
+                  "name": "service-date",
+                  "valueType": "date",
+                  "testValue": "2023-10-26",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-zy70lc5tk",
+            "name": "review-policy-constraints",
+            "facts": [
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-8n2kubdzc",
+                "name": "member-policy-reviewed",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-f4mrfua5v",
+                    "name": "covered-under-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-k181oadwj",
+                    "name": "exception-queried",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-9wfajp9nm",
+                "name": "exception-required-for-policy",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-nsznitltx",
+                "name": "member-account-suspended",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-k0z8d3cbp",
+                    "name": "member-id",
+                    "valueType": "identifier",
+                    "testValue": "MEM98765",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-rlbecfj6k",
+                    "name": "account-suspended",
+                    "valueType": "",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-7pckhughu",
+              "name": "query-user-join-date",
+              "returnedFact": {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              },
+              "inputMappings": {
+                "find": "fact-k0z8d3cbp"
+              },
+              "toolId": "json-read",
+              "staticParams": {
+                "collection": "members",
+                "searchField": "member-id",
+                "returns": "member"
+              },
+              "dynamicParams": [
+                "find"
+              ]
+            }
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-j11ezb6ip",
+              "factId": "fact-7f9fh6s0g",
+              "operator": "equals",
+              "evaluationMode": "deterministic",
+              "factField": "Account Status",
+              "value": "suspended"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-nsznitltx",
+              "name": "member-account-suspended",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-rlbecfj6k",
+                  "name": "account-suspended",
+                  "valueType": "",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "True"
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-gn5as85fk",
+          "given": [
+            {
+              "id": "interactionOutcome-hf08366p1",
+              "name": "member-physio-claim-received",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-h64eelso9",
+                  "name": "claim-id",
+                  "valueType": "identifier",
+                  "testValue": "CLM12345",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-uxnj86x9l",
+                  "name": "service-date",
+                  "valueType": "date",
+                  "testValue": "2023-10-26",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-zy70lc5tk",
+            "name": "review-policy-constraints",
+            "facts": [
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-8n2kubdzc",
+                "name": "member-policy-reviewed",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-f4mrfua5v",
+                    "name": "covered-under-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-k181oadwj",
+                    "name": "exception-queried",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-9wfajp9nm",
+                "name": "exception-required-for-policy",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-nsznitltx",
+                "name": "member-account-suspended",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-k0z8d3cbp",
+                    "name": "member-id",
+                    "valueType": "identifier",
+                    "testValue": "MEM98765",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-rlbecfj6k",
+                    "name": "account-suspended",
+                    "valueType": "",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-7pckhughu",
+              "name": "query-user-join-date",
+              "returnedFact": {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              },
+              "inputMappings": {
+                "find": "fact-k0z8d3cbp"
+              },
+              "toolId": "json-read",
+              "staticParams": {
+                "collection": "members",
+                "searchField": "member-id",
+                "returns": "member"
+              },
+              "dynamicParams": [
+                "find"
+              ]
+            }
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys100",
+              "factId": "fact-7f9fh6s0g",
+              "operator": "equals",
+              "evaluationMode": "deterministic",
+              "factField": "Account Status",
+              "value": "active"
+            },
+            {
+              "id": "rule-phys101",
+              "factId": "fact-7f9fh6s0g",
+              "operator": "equals",
+              "evaluationMode": "deterministic",
+              "factField": "Plan Type",
+              "value": "standard"
+            },
+            {
+              "id": "rule-phys102",
+              "factId": "fact-uxnj86x9l",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Service date is 60 or more days after the member Join Date"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "True"
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "False"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-wqvswzo5l",
+          "given": [
+            {
+              "id": "interactionOutcome-hf08366p1",
+              "name": "member-physio-claim-received",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-h64eelso9",
+                  "name": "claim-id",
+                  "valueType": "identifier",
+                  "testValue": "CLM12345",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-uxnj86x9l",
+                  "name": "service-date",
+                  "valueType": "date",
+                  "testValue": "2023-10-26",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-zy70lc5tk",
+            "name": "review-policy-constraints",
+            "facts": [
+              {
+                "id": "fact-k0z8d3cbp",
+                "name": "member-id",
+                "valueType": "identifier",
+                "testValue": "MEM98765",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-8n2kubdzc",
+                "name": "member-policy-reviewed",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-f4mrfua5v",
+                    "name": "covered-under-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-k181oadwj",
+                    "name": "exception-queried",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-9wfajp9nm",
+                "name": "exception-required-for-policy",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              },
+              {
+                "id": "interactionOutcome-nsznitltx",
+                "name": "member-account-suspended",
+                "role": "policy-analyst",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-k0z8d3cbp",
+                    "name": "member-id",
+                    "valueType": "identifier",
+                    "testValue": "MEM98765",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-rlbecfj6k",
+                    "name": "account-suspended",
+                    "valueType": "",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": true,
+                    "expression": ""
+                  }
+                ]
+              }
+            ],
+            "job": {
+              "id": "job-7pckhughu",
+              "name": "query-user-join-date",
+              "returnedFact": {
+                "id": "fact-7f9fh6s0g",
+                "name": "collected-user-information",
+                "valueType": "user-data",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "fields": [
+                  {
+                    "name": "join-date",
+                    "valueType": "date-time"
+                  },
+                  {
+                    "name": "account-status",
+                    "valueType": "text"
+                  },
+                  {
+                    "name": "plan-type",
+                    "valueType": "text"
+                  }
+                ]
+              },
+              "inputMappings": {
+                "find": "fact-k0z8d3cbp"
+              },
+              "toolId": "json-read",
+              "staticParams": {
+                "collection": "members",
+                "searchField": "member-id",
+                "returns": "member"
+              },
+              "dynamicParams": [
+                "find"
+              ]
+            }
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys103",
+              "factId": "fact-7f9fh6s0g",
+              "operator": "equals",
+              "evaluationMode": "deterministic",
+              "factField": "Account Status",
+              "value": "active"
+            },
+            {
+              "id": "rule-phys104",
+              "factId": "fact-7f9fh6s0g",
+              "operator": "equals",
+              "evaluationMode": "deterministic",
+              "factField": "Plan Type",
+              "value": "standard"
+            },
+            {
+              "id": "rule-phys105",
+              "factId": "fact-uxnj86x9l",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Service date is less than 60 days after the member Join Date"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "False"
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "True"
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-9wfajp9nm",
+              "name": "exception-required-for-policy",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": "",
+                  "calculatedValue": "['Hospital Recovery','Accepted ACC Claim','Time spent with previous Insurer if member swapped to this insurer in 60 days']"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-f4mrfua5v",
+          "name": "covered-under-policy",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-k181oadwj",
+          "name": "exception-queried",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-pmbgxfatj",
+          "name": "valid-exceptions-for-policy",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": true,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-k0z8d3cbp",
+          "name": "member-id",
+          "valueType": "identifier",
+          "testValue": "MEM98765",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-rlbecfj6k",
+          "name": "account-suspended",
+          "valueType": "",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-7f9fh6s0g",
+          "name": "collected-user-information",
+          "valueType": "user-data",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false,
+          "fields": [
+            {
+              "name": "join-date",
+              "valueType": "date-time"
+            },
+            {
+              "name": "account-status",
+              "valueType": "text"
+            },
+            {
+              "name": "plan-type",
+              "valueType": "text"
+            }
+          ]
+        },
+        {
+          "id": "fact-uxnj86x9l",
+          "name": "service-date",
+          "valueType": "date",
+          "testValue": "2023-10-26",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-h64eelso9",
+          "name": "claim-id",
+          "valueType": "identifier",
+          "testValue": "CLM12345",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "policy-analyst",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-a2199onqf",
+      "name": "make-eligibility-decision",
+      "index": 3,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-gczt358xk",
+          "name": "eligibility-decision-made",
+          "role": "eligibility-specialist",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-hxgvav5n9",
+              "name": "eligibility-status",
+              "valueType": "text",
+              "testValue": "Approved",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-3u2q8smlg",
+              "name": "decision-reason",
+              "valueType": "text",
+              "testValue": "Meets policy criteria.",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-5ci177se9",
+        "name": "make-eligibility-decision",
+        "facts": [
+          {
+            "id": "fact-hxgvav5n9",
+            "name": "eligibility-status",
+            "valueType": "text",
+            "testValue": "Approved",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-3u2q8smlg",
+            "name": "decision-reason",
+            "valueType": "text",
+            "testValue": "Meets policy criteria.",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-gczt358xk",
+            "name": "eligibility-decision-made",
+            "role": "eligibility-specialist",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-hxgvav5n9",
+                "name": "eligibility-status",
+                "valueType": "text",
+                "testValue": "Approved",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-3u2q8smlg",
+                "name": "decision-reason",
+                "valueType": "text",
+                "testValue": "Meets policy criteria.",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ]
+      },
+      "automation": {
+        "id": "automation-qtx31p0w3",
+        "name": "make-eligibility-decision-automation",
+        "facts": [
+          {
+            "id": "fact-f4mrfua5v",
+            "name": "covered-under-policy",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": true,
+            "expression": ""
+          },
+          {
+            "id": "fact-pmbgxfatj",
+            "name": "valid-exceptions-for-policy",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": true,
+            "isCalculated": true,
+            "expression": ""
+          },
+          {
+            "id": "fact-obr83hc7m",
+            "name": "member-provided-exception",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-k181oadwj",
+            "name": "exception-queried",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": true,
+            "expression": ""
+          },
+          {
+            "id": "fact-rlbecfj6k",
+            "name": "account-suspended",
+            "valueType": "",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": true,
+            "expression": ""
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-1r8l3k8h1",
+          "name": "eligibility-decision-view",
+          "facts": [
+            {
+              "id": "fact-f4mrfua5v",
+              "name": "covered-under-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            },
+            {
+              "id": "fact-pmbgxfatj",
+              "name": "valid-exceptions-for-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": true,
+              "isCalculated": true,
+              "expression": ""
+            },
+            {
+              "id": "fact-obr83hc7m",
+              "name": "member-provided-exception",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-k181oadwj",
+              "name": "exception-queried",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            },
+            {
+              "id": "fact-rlbecfj6k",
+              "name": "account-suspended",
+              "valueType": "",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": true,
+              "expression": ""
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-2swu5ta2d",
+              "name": "exception-circumstances-queried",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-obr83hc7m",
+                  "name": "member-provided-exception",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-nsznitltx",
+              "name": "member-account-suspended",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-rlbecfj6k",
+                  "name": "account-suspended",
+                  "valueType": "",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-3fdin4ihi",
+          "given": [
+            {
+              "id": "interactionOutcome-nsznitltx",
+              "name": "member-account-suspended",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-k0z8d3cbp",
+                  "name": "member-id",
+                  "valueType": "identifier",
+                  "testValue": "MEM98765",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-rlbecfj6k",
+                  "name": "account-suspended",
+                  "valueType": "",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-5ci177se9",
+            "name": "make-eligibility-decision",
+            "facts": [
+              {
+                "id": "fact-hxgvav5n9",
+                "name": "eligibility-status",
+                "valueType": "text",
+                "testValue": "Approved",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-3u2q8smlg",
+                "name": "decision-reason",
+                "valueType": "text",
+                "testValue": "Meets policy criteria.",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-gczt358xk",
+                "name": "eligibility-decision-made",
+                "role": "eligibility-specialist",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-hxgvav5n9",
+                    "name": "eligibility-status",
+                    "valueType": "text",
+                    "testValue": "Approved",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-3u2q8smlg",
+                    "name": "decision-reason",
+                    "valueType": "text",
+                    "testValue": "Meets policy criteria.",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys110",
+              "factId": "fact-rlbecfj6k",
+              "operator": "equals",
+              "value": "True",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Ineligible"
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Account currently Suspended"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-wnxe84srd",
+          "given": [
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-5ci177se9",
+            "name": "make-eligibility-decision",
+            "facts": [
+              {
+                "id": "fact-hxgvav5n9",
+                "name": "eligibility-status",
+                "valueType": "text",
+                "testValue": "Approved",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-3u2q8smlg",
+                "name": "decision-reason",
+                "valueType": "text",
+                "testValue": "Meets policy criteria.",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-gczt358xk",
+                "name": "eligibility-decision-made",
+                "role": "eligibility-specialist",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-hxgvav5n9",
+                    "name": "eligibility-status",
+                    "valueType": "text",
+                    "testValue": "Approved",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-3u2q8smlg",
+                    "name": "decision-reason",
+                    "valueType": "text",
+                    "testValue": "Meets policy criteria.",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys111",
+              "factId": "fact-f4mrfua5v",
+              "operator": "equals",
+              "value": "True",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Eligible"
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Covered under policy"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-kzuuo8yva",
+          "given": [
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-2swu5ta2d",
+              "name": "exception-circumstances-queried",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-obr83hc7m",
+                  "name": "member-provided-exception",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-5ci177se9",
+            "name": "make-eligibility-decision",
+            "facts": [
+              {
+                "id": "fact-hxgvav5n9",
+                "name": "eligibility-status",
+                "valueType": "text",
+                "testValue": "Approved",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-3u2q8smlg",
+                "name": "decision-reason",
+                "valueType": "text",
+                "testValue": "Meets policy criteria.",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-gczt358xk",
+                "name": "eligibility-decision-made",
+                "role": "eligibility-specialist",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-hxgvav5n9",
+                    "name": "eligibility-status",
+                    "valueType": "text",
+                    "testValue": "Approved",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-3u2q8smlg",
+                    "name": "decision-reason",
+                    "valueType": "text",
+                    "testValue": "Meets policy criteria.",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys112",
+              "factId": "fact-f4mrfua5v",
+              "operator": "equals",
+              "value": "False",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-phys113",
+              "factId": "fact-k181oadwj",
+              "operator": "equals",
+              "value": "True",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-phys114",
+              "factId": "fact-obr83hc7m",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Member exception response matches a valid exception in the Valid Exceptions list"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Eligible"
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Covered under policy: Policy exception valid"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        },
+        {
+          "id": "scenario-53e60go77",
+          "given": [
+            {
+              "id": "interactionOutcome-8n2kubdzc",
+              "name": "member-policy-reviewed",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-f4mrfua5v",
+                  "name": "covered-under-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-k181oadwj",
+                  "name": "exception-queried",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            },
+            {
+              "id": "interactionOutcome-2swu5ta2d",
+              "name": "exception-circumstances-queried",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-obr83hc7m",
+                  "name": "member-provided-exception",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-5ci177se9",
+            "name": "make-eligibility-decision",
+            "facts": [
+              {
+                "id": "fact-hxgvav5n9",
+                "name": "eligibility-status",
+                "valueType": "text",
+                "testValue": "Approved",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              },
+              {
+                "id": "fact-3u2q8smlg",
+                "name": "decision-reason",
+                "valueType": "text",
+                "testValue": "Meets policy criteria.",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-gczt358xk",
+                "name": "eligibility-decision-made",
+                "role": "eligibility-specialist",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-hxgvav5n9",
+                    "name": "eligibility-status",
+                    "valueType": "text",
+                    "testValue": "Approved",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  },
+                  {
+                    "id": "fact-3u2q8smlg",
+                    "name": "decision-reason",
+                    "valueType": "text",
+                    "testValue": "Meets policy criteria.",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys115",
+              "factId": "fact-f4mrfua5v",
+              "operator": "equals",
+              "value": "False",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-phys116",
+              "factId": "fact-k181oadwj",
+              "operator": "equals",
+              "value": "True",
+              "evaluationMode": "deterministic"
+            },
+            {
+              "id": "rule-phys117",
+              "factId": "fact-obr83hc7m",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Member exception response does not match any exception in the Valid Exceptions list"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Ineligible"
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false,
+                  "calculatedValue": "Not covered under policy: No exceptions Met"
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-hxgvav5n9",
+          "name": "eligibility-status",
+          "valueType": "text",
+          "testValue": "Approved",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-3u2q8smlg",
+          "name": "decision-reason",
+          "valueType": "text",
+          "testValue": "Meets policy criteria.",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-f4mrfua5v",
+          "name": "covered-under-policy",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-pmbgxfatj",
+          "name": "valid-exceptions-for-policy",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": true,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-obr83hc7m",
+          "name": "member-provided-exception",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-k181oadwj",
+          "name": "exception-queried",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-rlbecfj6k",
+          "name": "account-suspended",
+          "valueType": "",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-k0z8d3cbp",
+          "name": "member-id",
+          "valueType": "identifier",
+          "testValue": "MEM98765",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "eligibility-specialist",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-2q68aaxx3",
+      "name": "query-exception-circumstances",
+      "index": 2,
+      "outcomes": [
+        {
+          "id": "interactionOutcome-2swu5ta2d",
+          "name": "exception-circumstances-queried",
+          "role": "claims-processor",
+          "outcomeStream": "",
+          "activity": {
+            "name": "manual-physiotherapy-eligibility-verification"
+          },
+          "context": {
+            "name": "eligibility-verification"
+          },
+          "facts": [
+            {
+              "id": "fact-pmbgxfatj",
+              "name": "valid-exceptions-for-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": true,
+              "isCalculated": true,
+              "expression": ""
+            },
+            {
+              "id": "fact-obr83hc7m",
+              "name": "member-provided-exception",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ]
+        }
+      ],
+      "command": {
+        "id": "command-y1w9ajbhs",
+        "name": "query-exception-circumstances",
+        "facts": [
+          {
+            "id": "fact-pmbgxfatj",
+            "name": "valid-exceptions-for-policy",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": true,
+            "isCalculated": true,
+            "expression": ""
+          },
+          {
+            "id": "fact-obr83hc7m",
+            "name": "member-provided-exception",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "interactionOutcome-2swu5ta2d",
+            "name": "exception-circumstances-queried",
+            "role": "claims-processor",
+            "outcomeStream": "",
+            "activity": {
+              "name": "manual-physiotherapy-eligibility-verification"
+            },
+            "context": {
+              "name": "eligibility-verification"
+            },
+            "facts": [
+              {
+                "id": "fact-pmbgxfatj",
+                "name": "valid-exceptions-for-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": true,
+                "isCalculated": true,
+                "expression": ""
+              },
+              {
+                "id": "fact-obr83hc7m",
+                "name": "member-provided-exception",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ]
+          }
+        ]
+      },
+      "interface": {
+        "id": "interface-vimv9ns0m",
+        "name": "query-exception-circumstances-interaction",
+        "description": "Query the Member about whether they meet any of the valid exceptions",
+        "facts": [
+          {
+            "id": "fact-pmbgxfatj",
+            "name": "valid-exceptions-for-policy",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": true,
+            "isCalculated": true,
+            "expression": ""
+          },
+          {
+            "id": "fact-obr83hc7m",
+            "name": "member-provided-exception",
+            "valueType": "text",
+            "testValue": "",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-qu0fgeo30",
+          "name": "query-exception-circumstances-interaction-view",
+          "facts": [
+            {
+              "id": "fact-pmbgxfatj",
+              "name": "valid-exceptions-for-policy",
+              "valueType": "text",
+              "testValue": "",
+              "defaultValue": "",
+              "collection": true,
+              "isCalculated": true,
+              "expression": ""
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-9wfajp9nm",
+              "name": "exception-required-for-policy",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-fvqubifwy",
+          "given": [
+            {
+              "id": "interactionOutcome-9wfajp9nm",
+              "name": "exception-required-for-policy",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-y1w9ajbhs",
+            "name": "query-exception-circumstances",
+            "facts": [
+              {
+                "id": "fact-pmbgxfatj",
+                "name": "valid-exceptions-for-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": true,
+                "isCalculated": true,
+                "expression": ""
+              },
+              {
+                "id": "fact-obr83hc7m",
+                "name": "member-provided-exception",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-2swu5ta2d",
+                "name": "exception-circumstances-queried",
+                "role": "claims-processor",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-obr83hc7m",
+                    "name": "member-provided-exception",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys106",
+              "factId": "fact-obr83hc7m",
+              "operator": "is empty",
+              "evaluationMode": "deterministic"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": "Member response could not be interpreted in any meaningful way, clarify if member meets valid policy exceptions"
+        },
+        {
+          "id": "scenario-4q5civi5s",
+          "given": [
+            {
+              "id": "interactionOutcome-9wfajp9nm",
+              "name": "exception-required-for-policy",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-y1w9ajbhs",
+            "name": "query-exception-circumstances",
+            "facts": [
+              {
+                "id": "fact-pmbgxfatj",
+                "name": "valid-exceptions-for-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": true,
+                "isCalculated": true,
+                "expression": ""
+              },
+              {
+                "id": "fact-obr83hc7m",
+                "name": "member-provided-exception",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-2swu5ta2d",
+                "name": "exception-circumstances-queried",
+                "role": "claims-processor",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-obr83hc7m",
+                    "name": "member-provided-exception",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys107",
+              "factId": "fact-obr83hc7m",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Member response is not related to valid policy exceptions, or does not clearly state whether valid policy exceptions are met"
+            }
+          ],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": "Members response is unrelated, attempt clarification on whether they meet valid policy exceptions"
+        },
+        {
+          "id": "scenario-qbyh7gxh7",
+          "given": [
+            {
+              "id": "interactionOutcome-9wfajp9nm",
+              "name": "exception-required-for-policy",
+              "role": "policy-analyst",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "when": {
+            "id": "command-y1w9ajbhs",
+            "name": "query-exception-circumstances",
+            "facts": [
+              {
+                "id": "fact-pmbgxfatj",
+                "name": "valid-exceptions-for-policy",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": true,
+                "isCalculated": true,
+                "expression": ""
+              },
+              {
+                "id": "fact-obr83hc7m",
+                "name": "member-provided-exception",
+                "valueType": "text",
+                "testValue": "",
+                "defaultValue": "",
+                "collection": false,
+                "isCalculated": false
+              }
+            ],
+            "outcomes": [
+              {
+                "id": "interactionOutcome-2swu5ta2d",
+                "name": "exception-circumstances-queried",
+                "role": "claims-processor",
+                "outcomeStream": "",
+                "activity": {
+                  "name": "manual-physiotherapy-eligibility-verification"
+                },
+                "context": {
+                  "name": "eligibility-verification"
+                },
+                "facts": [
+                  {
+                    "id": "fact-pmbgxfatj",
+                    "name": "valid-exceptions-for-policy",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": true,
+                    "isCalculated": true,
+                    "expression": ""
+                  },
+                  {
+                    "id": "fact-obr83hc7m",
+                    "name": "member-provided-exception",
+                    "valueType": "text",
+                    "testValue": "",
+                    "defaultValue": "",
+                    "collection": false,
+                    "isCalculated": false
+                  }
+                ]
+              }
+            ]
+          },
+          "whenBusinessRule": "",
+          "whenBusinessRules": [
+            {
+              "id": "rule-phys108",
+              "factId": "fact-obr83hc7m",
+              "operator": "is not empty",
+              "evaluationMode": "llm",
+              "llmPrompt": "Member response matches and verifies a valid policy exception"
+            },
+            {
+              "id": "rule-mx4jwv25y",
+              "factId": "fact-obr83hc7m",
+              "operator": "equals",
+              "value": "",
+              "evaluationMode": "llm",
+              "llmPrompt": "Member response clarifies that no valid policy exceptions are met"
+            }
+          ],
+          "whenBusinessRuleLogic": "OR",
+          "then": [
+            {
+              "id": "interactionOutcome-2swu5ta2d",
+              "name": "exception-circumstances-queried",
+              "role": "claims-processor",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-pmbgxfatj",
+                  "name": "valid-exceptions-for-policy",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": true,
+                  "isCalculated": true,
+                  "expression": ""
+                },
+                {
+                  "id": "fact-obr83hc7m",
+                  "name": "member-provided-exception",
+                  "valueType": "text",
+                  "testValue": "",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-pmbgxfatj",
+          "name": "valid-exceptions-for-policy",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": true,
+          "isCalculated": true,
+          "expression": ""
+        },
+        {
+          "id": "fact-obr83hc7m",
+          "name": "member-provided-exception",
+          "valueType": "text",
+          "testValue": "",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "claims-processor",
+      "outcomeStream": ""
+    },
+    {
+      "id": "slice-mvsqpeeen",
+      "name": "eligibility-decision-view",
+      "index": 4,
+      "outcomes": [],
+      "interface": {
+        "id": "interface-12osdalka",
+        "name": "make-eligibility-decision-interaction",
+        "description": "",
+        "facts": [
+          {
+            "id": "fact-hxgvav5n9",
+            "name": "eligibility-status",
+            "valueType": "text",
+            "testValue": "Approved",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          },
+          {
+            "id": "fact-3u2q8smlg",
+            "name": "decision-reason",
+            "valueType": "text",
+            "testValue": "Meets policy criteria.",
+            "defaultValue": "",
+            "collection": false,
+            "isCalculated": false
+          }
+        ]
+      },
+      "queries": [
+        {
+          "id": "query-dtbb8s2cc",
+          "name": "eligibility-decision-view",
+          "facts": [
+            {
+              "id": "fact-hxgvav5n9",
+              "name": "eligibility-status",
+              "valueType": "text",
+              "testValue": "Approved",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            },
+            {
+              "id": "fact-3u2q8smlg",
+              "name": "decision-reason",
+              "valueType": "text",
+              "testValue": "Meets policy criteria.",
+              "defaultValue": "",
+              "collection": false,
+              "isCalculated": false
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "scenario-z8aqffegp",
+          "given": [
+            {
+              "id": "interactionOutcome-gczt358xk",
+              "name": "eligibility-decision-made",
+              "role": "eligibility-specialist",
+              "outcomeStream": "",
+              "activity": {
+                "name": "manual-physiotherapy-eligibility-verification"
+              },
+              "context": {
+                "name": "eligibility-verification"
+              },
+              "facts": [
+                {
+                  "id": "fact-hxgvav5n9",
+                  "name": "eligibility-status",
+                  "valueType": "text",
+                  "testValue": "Approved",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                },
+                {
+                  "id": "fact-3u2q8smlg",
+                  "name": "decision-reason",
+                  "valueType": "text",
+                  "testValue": "Meets policy criteria.",
+                  "defaultValue": "",
+                  "collection": false,
+                  "isCalculated": false
+                }
+              ]
+            }
+          ],
+          "givenBusinessRule": "",
+          "givenBusinessRules": [],
+          "givenBusinessRuleLogic": "AND",
+          "whenBusinessRule": "",
+          "whenBusinessRules": [],
+          "whenBusinessRuleLogic": "AND",
+          "then": [],
+          "error": ""
+        }
+      ],
+      "facts": [
+        {
+          "id": "fact-hxgvav5n9",
+          "name": "eligibility-status",
+          "valueType": "text",
+          "testValue": "Approved",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        },
+        {
+          "id": "fact-3u2q8smlg",
+          "name": "decision-reason",
+          "valueType": "text",
+          "testValue": "Meets policy criteria.",
+          "defaultValue": "",
+          "collection": false,
+          "isCalculated": false
+        }
+      ],
+      "role": "claims-processor",
+      "outcomeStream": ""
+    }
+  ],
+  "governance": {
+    "owner": "4fab728a-67a9-41e6-8710-cc9912a788ab",
+    "status": "Draft",
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-14T03:37:21.213Z",
+    "compliance": [],
+    "visibility": "internal"
+  },
+  "exportedAt": "2026-04-14T03:38:13.056Z",
+  "version": "1.0.0"
+}
