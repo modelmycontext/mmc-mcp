@@ -1,0 +1,5 @@
+[
+  { "member-id": "user-1", "name": "John Doe", "planType": "standard", "joinDate": "2026-03-21","accountStatus": "active" },
+  { "member-id": "user-2", "name": "Jane Smith", "planType": "standard", "joinDate": "2023-01-01", "accountStatus": "suspended" },
+  { "member-id": "user-3", "name": "Alice Brown", "planType": "standard", "joinDate": "2025-12-28", "accountStatus": "active" }
+]

@@ -1,0 +1,36 @@
+{
+  "skillsDir": "./skills",
+  "mmcGithubServer": [
+    {
+      "owner": "{{MMC_GITHUB_OWNER}}",
+      "repo": "{{MMC_GITHUB_REPO}}",
+      "path": "{{MMC_GITHUB_PATH}}",
+      "branch": "{{MMC_GITHUB_BRANCH}}"
+    }
+  ],
+  "externalServers": [
+    {
+      "name": "sqlite",
+      "command": "node",
+      "args": ["./node_modules/mcp-server-sqlite/dist/cli.js", "--db", "data/events.db"]
+    },
+    {
+      "name": "github",
+      "command": "bun",
+      "args": ["x", "-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{{GITHUB_PERSONAL_ACCESS_TOKEN}}"
+      }
+    },
+    {
+      "name": "slack",
+      "command": "bun",
+      "args": ["x", "-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "{{SLACK_BOT_TOKEN}}",
+        "SLACK_TEAM_ID": "{{SLACK_TEAM_ID}}"
+      },
+      "exposeToClient": true
+    }
+  ]
+}

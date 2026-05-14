@@ -1,0 +1,53 @@
+# VCS / CI
+.git
+.github
+.gitignore
+.gitattributes
+
+# Editor / IDE / local-only Claude state
+.idea
+.vscode
+.claude
+CLAUDE.local.md
+.run
+.playwright-mcp
+
+# Build outputs (we build inside the image)
+dist
+dist-mcpb
+*.tsbuildinfo
+*.map
+
+# Local dev state — never bake into the image
+data
+skills
+logs
+node_modules
+
+# Tests & dev tooling
+tests
+vitest.config.ts
+vite.config.ts
+
+# Local debug dumps
+caps.json
+tools_response.json
+github_tools.json
+
+# Secrets / env (use Fly secrets instead)
+.env
+.env.*
+!.env.example
+
+# Docs / boilerplate not needed at runtime
+docs
+public
+README.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSING.md
+LICENSE
+LICENSE-APACHE
+SECURITY.md
+manifest.json
+.mcpbignore
