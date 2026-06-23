@@ -1,0 +1,453 @@
+<!doctype html>
+<!--
+  ui://mmc/interface-form — the generic MCP Apps renderer mmc-mcp serves as a UI
+  resource. Renders ANY interface slice from a FormSpec and submits the existing
+  complete-slice payload { sliceId, facts }.
+
+  Spec delivery (in priority order):
+    1. window.__MMC_FORM_SPEC__  — static/demo injection
+    2. postMessage { type: 'ui/render'|'mcp:render', spec } from the host
+  Submit: postMessage { type: 'ui/tool-call', tool: 'complete-slice', arguments }
+  to the host bridge (the host forwards it to mmc-mcp).
+
+  Visual language mirrors the public form runner (PublicFormRunner.tsx): a white
+  "document page" with an accent letterhead strip, a serif navy title, and
+  numbered, accent-barred section headers — so an interface step reads like the
+  branded applicant form rather than a generic dialog.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MMC Interface Form</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap');
+  :root {
+    --bg:#eef1f5; --card:#fff; --ink:#0C2A43; --ink-soft:#33445a; --muted:#6b7685;
+    --line:#e6eaef; --line-strong:#cdd6e0; --accent:#2f72d6; --accent-strong:#255fb8;
+    --focus:#50A2FF; --ro-bg:#f4f6f9; --ro-ink:#44505f; --danger:#d4351c;
+    --radius:10px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+    --sans:'DM Sans',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink-soft);font:14.5px/1.45 var(--sans);padding:18px 14px}
+  /* document "page" — paper card with an accent letterhead strip */
+  .card{width:100%;margin:0 auto;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:0 1px 2px rgba(12,42,67,.05),0 18px 50px rgba(12,42,67,.10);overflow:hidden}
+  .card::before{content:"";display:block;height:6px;background:var(--accent)}
+  .head{padding:18px 28px 10px}
+  .head .eyebrow{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .head h1{margin:0;font-family:var(--serif);font-size:25px;font-weight:400;line-height:1.1;color:var(--ink)}
+  .head p{margin:5px 0 0;color:var(--muted);font-size:13.5px;max-width:62ch}
+  .body{padding:16px 28px 4px}
+  section{padding:12px 0}
+  /* numbered, accent-barred section header (mirrors the template form) */
+  .sec-head{display:flex;align-items:center;gap:10px;margin:0 0 10px;
+    border-left:4px solid var(--accent);background:var(--ro-bg);border-radius:4px;padding:6px 11px}
+  .sec-no{flex:none;width:24px;height:24px;border-radius:999px;background:var(--accent);color:#fff;
+    font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .sec-head.ro{background:transparent;border-left-color:var(--line-strong)}
+  .sec-title{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);font-weight:600}
+  .sec-head.ro .sec-title{color:var(--muted)}
+  .sec-note{color:var(--muted);font-size:12.5px;margin:-6px 0 14px;display:flex;align-items:center;gap:6px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px}
+  .field.full{grid-column:1/-1}
+  .field>label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:4px}
+  .field .req{color:var(--danger);margin-left:3px}
+  input[type=text],input[type=number],input[type=date],input[type=datetime-local],select,textarea{
+    width:100%;padding:7px 11px;font:inherit;color:var(--ink);background:#fff;
+    border:1px solid var(--line-strong);border-radius:var(--radius);outline:none;
+    box-shadow:0 1px 1px rgba(12,42,67,.03);transition:border-color .12s,box-shadow .12s}
+  input:focus,select:focus,textarea:focus{border-color:var(--focus);box-shadow:0 0 0 3px rgba(80,162,255,.25)}
+  textarea{resize:vertical;min-height:66px;line-height:1.45}
+  .section-ro{background:var(--ro-bg);margin:0 -28px;padding:12px 28px}
+  .section-ro input,.section-ro select,.section-ro textarea{background:#eef1f5;color:var(--ro-ink);border-color:var(--line)}
+  input:disabled,select:disabled,textarea:disabled{cursor:not-allowed;opacity:.95}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--danger);box-shadow:0 0 0 3px rgba(212,53,28,.14)}
+  .sig-img{max-height:140px;max-width:100%;display:block;border:1px solid var(--line-strong);border-radius:8px;background:#fff;padding:6px}
+  .ro-empty{color:var(--muted);font-size:13px;font-style:italic;padding:4px 0}
+  .check{display:flex;align-items:flex-start;gap:10px}
+  .check input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent)}
+  .check label{font-weight:500;font-size:13.5px;color:var(--ink-soft)}
+  fieldset{border:1px solid var(--line);background:var(--ro-bg);border-radius:10px;padding:10px 13px 12px;margin:0}
+  fieldset>legend{font-size:11px;color:var(--muted);padding:0 7px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .coll-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+  .coll-item>div{flex:1}
+  .btn{font:inherit;font-weight:600;cursor:pointer;border-radius:var(--radius);border:1px solid var(--line-strong);
+    background:#fff;color:var(--ink-soft);padding:8px 15px;transition:background .12s,border-color .12s,filter .12s}
+  .btn:hover{background:#f4f6f9}
+  .btn:disabled{opacity:.4;cursor:not-allowed;filter:none}
+  .btn-primary:disabled{background:var(--accent);border-color:var(--accent)}
+  .btn-sm{padding:5px 10px;font-size:13px}
+  .btn-icon{padding:6px 9px;line-height:1;color:var(--muted)}
+  .foot{padding:14px 28px 18px;display:flex;align-items:center;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line)}
+  .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 1px 2px rgba(12,42,67,.12)}
+  .btn-primary:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+  .btn-danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+  .btn-danger:hover{filter:brightness(.93)}
+  .foot .hint{color:var(--muted);font-size:12.5px}
+  .foot .err{color:var(--danger);font-size:12.5px;font-weight:600}
+  .preview{margin:14px auto 0;width:100%}
+  .preview .ph{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 4px 8px}
+  pre{margin:0;background:#0C2A43;color:#d7e3f4;border-radius:12px;padding:16px 18px;
+    font:12.5px/1.55 var(--mono);overflow:auto;border:1px solid #174268}
+  pre .k{color:#8fb6ff}pre .s{color:#b9e6a8}pre .n{color:#f3c98b}
+  .empty{max-width:560px;margin:64px auto;text-align:center;color:var(--muted)}
+  .lock{width:12px;height:12px;display:inline-block;vertical-align:-1px}
+
+  /* Compact mode — denser layout for narrow surfaces (e.g. the test panel). */
+  body.compact{padding:10px}
+  body.compact .card{border-radius:10px}
+  body.compact .card::before{height:4px}
+  body.compact .head{padding:16px 18px 9px}
+  body.compact .head .eyebrow{font-size:10px;margin-bottom:4px}
+  body.compact .head h1{font-size:23px}
+  body.compact .head p{font-size:12.5px;margin-top:6px}
+  body.compact .body{padding:12px 18px 2px}
+  body.compact section{padding:12px 0}
+  body.compact .sec-head{padding:6px 10px;margin-bottom:11px}
+  body.compact .sec-no{width:21px;height:21px;font-size:11.5px}
+  body.compact .section-ro{margin:0 -18px;padding:12px 18px}
+  body.compact .sec-note{font-size:11px;margin-bottom:9px}
+  body.compact .grid{gap:11px 14px}
+  body.compact .field>label{font-size:12px;margin-bottom:4px}
+  body.compact input[type=text],body.compact input[type=number],body.compact input[type=date],
+  body.compact input[type=datetime-local],body.compact select,body.compact textarea{padding:7px 10px;border-radius:8px}
+  body.compact textarea{min-height:64px}
+  body.compact .foot{padding:13px 18px 16px}
+  body.compact .btn{padding:8px 13px}
+  body.compact .preview{margin-top:10px}
+  body.compact pre{padding:11px 13px;font-size:11.5px}
+  /* Display (view) mode — read-only projection, no input chrome. */
+  body.display .section-ro{background:transparent;margin:0;padding:11px 0}
+</style>
+</head>
+<body>
+<div id="root"><div class="empty">Waiting for the workflow step…</div></div>
+<script>
+(function () {
+  "use strict";
+  var root = document.getElementById("root");
+  var values = {};
+  var spec = null;
+  var isEditable = false;
+  var errEl = null;
+  var decisionSync = null;
+
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === "class") n.className = attrs[k];
+      else if (k === "text") n.textContent = attrs[k];
+      else if (k.slice(0, 2) === "on") n.addEventListener(k.slice(2), attrs[k]);
+      else if (attrs[k] === true) n.setAttribute(k, "");
+      else if (attrs[k] != null && attrs[k] !== false) n.setAttribute(k, attrs[k]);
+    });
+    (kids || []).forEach(function (c) { if (c != null) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function isSignatureName(n) { return /signature/i.test(String(n == null ? "" : n)); }
+  // STOPGAP field hide-list. Until a per-field "show on form" flag is authored
+  // in the builder (carried fact → exporter → FormSpec), these field/sub-field
+  // names are suppressed from the rendered form. Names are kebab, matched
+  // case-insensitively against both top-level fields and composite sub-fields.
+  var HIDDEN_FIELD_NAMES = {
+    "licence-sighted-by-coach": 1,
+    "participant-msd-client-number": 1,
+    "is-msd-client": 1,
+    "is-nz-resident": 1,
+    "is-equity-index-500-school-student": 1,
+    "meets-income-test": 1,
+    "case-worker": 1
+  };
+  function isHiddenName(n) { return !!HIDDEN_FIELD_NAMES[String(n == null ? "" : n).toLowerCase()]; }
+  function findField(pred) {
+    var found = null;
+    ((spec && spec.sections) || []).forEach(function (sec) {
+      (sec.fields || []).forEach(function (f) { if (!found && pred(f)) found = f; });
+    });
+    return found;
+  }
+  // The "decline reason" field: optional in general, required only when Decline
+  // is taken, and (when filled) it disables the approve action.
+  function declineReasonField() {
+    return findField(function (f) { return /decline[-_ ]?reason|rejection[-_ ]?reason/i.test(String(f.name || "")); });
+  }
+  // Render a captured signature (or any image fact) as a read-only image rather
+  // than a raw base64 text box. The value travels back on submit unchanged via
+  // the surrounding field/composite accumulator.
+  function imageView(value) {
+    var url = value == null ? "" : String(value);
+    if (/^data:image\//i.test(url) || /^https?:\/\//i.test(url)) {
+      var img = el("img", { class: "sig-img", src: url, alt: "signature" });
+      img.addEventListener("load", reportHeight);
+      return img;
+    }
+    return el("div", { class: "ro-empty", text: url ? url : "Not provided" });
+  }
+  function scalarInput(control, value, onChange, ro) {
+    var map = { text: "text", number: "number", date: "date", datetime: "datetime-local" };
+    return el("input", { type: map[control.kind] || "text", value: value == null ? "" : value,
+      disabled: ro || undefined, oninput: function (e) { onChange(e.target.value); } });
+  }
+  function textareaInput(value, onChange, ro) {
+    var ta = el("textarea", { rows: 4, disabled: ro || undefined,
+      oninput: function (e) { onChange(e.target.value); } });
+    ta.value = value == null ? "" : String(value);
+    return ta;
+  }
+  function checkbox(value, onChange, ro, label) {
+    var box = el("input", { type: "checkbox", disabled: ro || undefined,
+      onchange: function (e) { onChange(e.target.checked); } });
+    if (value === true || value === "true") box.checked = true;
+    return el("div", { class: "check" }, [box, label ? el("label", { text: label }) : null]);
+  }
+  function select(control, value, onChange, ro) {
+    var opts = [el("option", { value: "", text: ro ? "" : "Select…" })];
+    (control.options || []).forEach(function (o) {
+      var op = el("option", { value: o, text: o }); if (o === value) op.selected = true; opts.push(op);
+    });
+    return el("select", { disabled: ro || undefined, onchange: function (e) { onChange(e.target.value); } }, opts);
+  }
+  function composite(control, value, onChange, ro) {
+    // `obj` is a single persistent accumulator shared by every subfield closure
+    // (this runs once per composite render; the control is not re-rendered on
+    // change). Each subfield MUTATES it then emits a shallow copy — mutating the
+    // shared object is what makes multi-field edits accumulate. (Copying a
+    // freshly-captured `obj` per edit dropped every field but the last touched.)
+    var obj = (value && typeof value === "object") ? value : {};
+    var rows = (control.fields || []).filter(function (sub) { return !isHiddenName(sub.name); }).map(function (sub) {
+      if (isSignatureName(sub.name)) {
+        // Signature sub-field: show the captured image read-only, not base64.
+        return el("div", { class: "field full" }, [el("label", { text: sub.label }), imageView(obj[sub.name])]);
+      }
+      var subFull = (sub.control.kind === "composite" || sub.control.kind === "textarea");
+      return el("div", { class: subFull ? "field full" : "field" }, [el("label", { text: sub.label }),
+        controlNode(sub.control, obj[sub.name], function (v) {
+          obj[sub.name] = v; onChange(Object.assign({}, obj));
+        }, ro, sub.label)]);
+    });
+    // Lay the composite's sub-fields out on the same two-column grid the parent
+    // sections use. No legend: the field's own label (e.g. "Emergency Contact")
+    // already titles the group — the value-type name would just repeat it.
+    return el("fieldset", {}, [el("div", { class: "grid" }, rows)]);
+  }
+  function controlNode(control, value, onChange, ro) {
+    switch (control.kind) {
+      case "checkbox":  return checkbox(value, onChange, ro, null);
+      case "select":    return select(control, value, onChange, ro);
+      case "composite": return composite(control, value, onChange, ro);
+      case "textarea":  return textareaInput(value, onChange, ro);
+      default:          return scalarInput(control, value, onChange, ro);
+    }
+  }
+  function fieldNode(field) {
+    if (isHiddenName(field.name)) return null;
+    var ro = !!field.readOnly;
+    var get = function () { return values[field.name]; };
+    var set = function (v) { values[field.name] = v; revalidate(); if (decisionSync) decisionSync(); };
+    if (values[field.name] === undefined) values[field.name] = field.value;
+    if (field.control.kind === "checkbox" && !field.collection) {
+      return el("div", { class: "field full", "data-field": field.name }, [checkbox(get(), set, ro, field.label + (field.required ? " *" : ""))]);
+    }
+    var labelEl = el("label", {}, [field.label, field.required ? el("span", { class: "req", text: "*" }) : null]);
+    if (isSignatureName(field.name) && !field.collection) {
+      return el("div", { class: "field full", "data-field": field.name }, [labelEl, imageView(get())]);
+    }
+    if (field.collection) {
+      var wrap = el("div", {});
+      var redraw = function () {
+        wrap.innerHTML = "";
+        var arr = Array.isArray(get()) ? get() : [];
+        if (!arr.length) wrap.appendChild(el("div", { class: "sec-note", text: "No entries" }));
+        arr.forEach(function (item, i) {
+          wrap.appendChild(el("div", { class: "coll-item" }, [
+            el("div", {}, [controlNode(field.control, item, function (v) { arr[i] = v; set(arr); }, ro)]),
+            ro ? null : el("button", { class: "btn btn-icon", type: "button", title: "Remove",
+              onclick: function () { arr.splice(i, 1); set(arr); redraw(); } }, ["✕"])]));
+        });
+        if (!ro) wrap.appendChild(el("button", { class: "btn btn-sm", type: "button",
+          onclick: function () { var a = Array.isArray(get()) ? get() : []; a.push(undefined); set(a); redraw(); } },
+          ["+ Add " + field.label]));
+      };
+      redraw();
+      return el("div", { class: "field full", "data-field": field.name }, [labelEl, wrap]);
+    }
+    var cls = (field.control.kind === "composite" || field.control.kind === "textarea") ? "field full" : "field";
+    return el("div", { class: cls, "data-field": field.name }, [labelEl, controlNode(field.control, get(), set, ro)]);
+  }
+  function lockIcon() {
+    var span = el("span", { class: "lock" });
+    span.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+    return span;
+  }
+  function sectionNode(sec, no, showHeader) {
+    // Numbered, accent-barred header — only when the form has more than one
+    // section. A lone section (e.g. "Your input") gets no header: numbering a
+    // single section adds no value and just repeats the host's step title.
+    var head = (showHeader && sec.title)
+      ? el("div", { class: "sec-head" + (sec.readOnly ? " ro" : "") }, [
+          (!sec.readOnly && no) ? el("span", { class: "sec-no", text: String(no) }) : null,
+          el("div", { class: "sec-title", text: sec.title }),
+        ])
+      : null;
+    return el("section", { class: sec.readOnly ? "section-ro" : "" }, [
+      head,
+      sec.note ? el("p", { class: "sec-note" }, [lockIcon(), sec.note]) : null,
+      el("div", { class: "grid" }, sec.fields.map(fieldNode)),
+    ]);
+  }
+  function collectFacts() {
+    var facts = {};
+    spec.sections.forEach(function (sec) {
+      if (sec.readOnly) return;
+      sec.fields.forEach(function (f) {
+        var v = values[f.name];
+        if (v === undefined || v === "") return;
+        if (f.control.kind === "number" && !f.collection) v = Number(v);
+        facts[f.name] = v;
+      });
+    });
+    return facts;
+  }
+  function callArgs(extra) { return { sliceId: spec.sliceId, facts: Object.assign({}, collectFacts(), extra || {}) }; }
+  // Required-field validation. The skill marks each interface fact it needs as
+  // `required`; honor that before posting complete-slice so an empty field
+  // can't slip through and silently stall the workflow server-side (no scenario
+  // matches when an upstream fact is undefined).
+  function missingRequired() {
+    var missing = [];
+    (spec.sections || []).forEach(function (sec) {
+      if (sec.readOnly) return;
+      (sec.fields || []).forEach(function (f) {
+        if (!f.required || isHiddenName(f.name)) return; // hidden fields can't be filled
+        var v = values[f.name], empty;
+        if (f.collection) empty = !Array.isArray(v) || !v.filter(function (x) { return x !== undefined && x !== ""; }).length;
+        else if (f.control.kind === "checkbox") empty = false; // a boolean's false is a valid answer
+        else empty = (v === undefined || v === "");
+        if (empty) missing.push(f);
+      });
+    });
+    return missing;
+  }
+  function clearErrors() {
+    [].forEach.call(root.querySelectorAll(".field.invalid"), function (n) { n.classList.remove("invalid"); });
+    if (errEl) errEl.textContent = "";
+  }
+  function markErrors(missing) {
+    clearErrors();
+    missing.forEach(function (f) {
+      var node = root.querySelector('[data-field="' + f.name + '"]');
+      if (node) node.classList.add("invalid");
+    });
+    if (errEl) errEl.textContent = "Please complete: " + missing.map(function (f) { return f.label; }).join(", ");
+    reportHeight();
+  }
+  // Re-check as the user edits, but only once errors are already on screen.
+  function revalidate() { if (errEl && errEl.textContent) markErrors(missingRequired()); }
+  function submit(extra) {
+    var missing = missingRequired();
+    if (missing.length) { markErrors(missing); return; }
+    clearErrors();
+    var args = callArgs(extra);
+    try { window.parent.postMessage({ type: "ui/tool-call", tool: "complete-slice", arguments: args }, "*"); } catch (e) {}
+  }
+  // Report content height to the host so it can size the iframe to fit (no
+  // inner scrollbar, no wasted space). Measure the BODY, not documentElement:
+  // <html> is floored at the iframe's own viewport height, so once the host
+  // grows the iframe past the content the next resize reads that larger height
+  // back and ratchets up +2 each round-trip until it hits the host's max clamp
+  // (the "slowly growing empty background"). body height is auto = content, so
+  // it reflects the real form height and can't ratchet.
+  function reportHeight() {
+    var h = Math.ceil(document.body.getBoundingClientRect().height);
+    try { window.parent.postMessage({ type: "ui/resize", height: h }, "*"); } catch (e) {}
+  }
+
+  function render(s, opts) {
+    spec = s; values = {};
+    opts = opts || {};
+    document.body.classList.toggle("compact", !!opts.compact);
+    // Display (view) mode: no editable section → read-only projection. The footer
+    // still shows the spec's action (e.g. "Close") so the user can advance.
+    var hasActions = !!(spec.actions && spec.actions.length);
+    var editable = hasActions || (spec.sections || []).some(function (sec) { return !sec.readOnly && (sec.fields || []).length; });
+    isEditable = editable;
+    document.body.classList.toggle("display", !editable);
+    root.innerHTML = "";
+    // Number editable sections sequentially (read-only context sections are not
+    // numbered) so the form reads like the template's numbered sections.
+    var secNo = 0;
+    decisionSync = null;
+    // The host chrome already shows the step title, so the form omits its own
+    // header (eyebrow/title/description). Section headers show only when the
+    // form has more than one section — a lone "Your input" needs no header.
+    var titled = (spec.sections || []).filter(function (s) { return s.title; }).length;
+    // Decline reason is optional in general — strip its required marker before
+    // the body renders; it's enforced only when the Decline action is taken.
+    var drf = hasActions ? declineReasonField() : null;
+    if (drf) drf.required = false;
+    var children = [
+      el("div", { class: "body" }, (spec.sections || []).map(function (sec) {
+        var n = (!sec.readOnly && sec.title && titled > 1) ? (++secNo) : null;
+        return sectionNode(sec, n, titled > 1);
+      })),
+    ];
+    errEl = null;
+    if (hasActions) {
+      // Decision buttons: each stamps its `set` facts and posts the same
+      // complete-slice payload; the slice's first-match scenarios pick the outcome.
+      errEl = el("span", { class: "err" });
+      var acceptBtns = [];
+      var footChildren = spec.actions.map(function (a) {
+        var isDanger = a.variant === "danger";
+        var cls = "btn" + (a.variant === "primary" ? " btn-primary" : isDanger ? " btn-danger" : "");
+        var btn = el("button", { class: cls, type: "button", onclick: function () {
+          // Declining requires a reason: surface the requirement rather than submit.
+          if (isDanger && drf) {
+            var dv = values[drf.name];
+            if (dv === undefined || String(dv).trim() === "") {
+              markErrors([drf]);
+              if (errEl) errEl.textContent = "Please provide a reason for declining.";
+              reportHeight();
+              return;
+            }
+          }
+          submit(a.set);
+        } }, [a.label]);
+        if (!isDanger) acceptBtns.push(btn);
+        return btn;
+      });
+      footChildren.push(errEl);
+      children.push(el("div", { class: "foot" }, footChildren));
+      // A filled decline reason implies declining → disable the approve
+      // (non-danger) action(s) while one is present; kept live as the user types.
+      decisionSync = function () {
+        var filled = drf && values[drf.name] !== undefined && String(values[drf.name]).trim() !== "";
+        acceptBtns.forEach(function (b) { b.disabled = !!filled; });
+      };
+      decisionSync();
+    } else if (spec.submitLabel) {
+      errEl = el("span", { class: "err" });
+      children.push(el("div", { class: "foot" }, [
+        el("button", { class: editable ? "btn btn-primary" : "btn", type: "button", onclick: function () { submit(); } }, [spec.submitLabel]),
+        errEl,
+      ]));
+    }
+    root.appendChild(el("div", { class: "card" }, children));
+    reportHeight();
+  }
+
+  // spec delivery
+  if (window.__MMC_FORM_SPEC__) { render(window.__MMC_FORM_SPEC__, { compact: window.__MMC_FORM_COMPACT__ }); return; }
+  window.addEventListener("message", function (e) {
+    var d = e.data || {};
+    if ((d.type === "ui/render" || d.type === "mcp:render") && d.spec) render(d.spec, { compact: d.compact });
+  });
+  window.addEventListener("resize", reportHeight);
+  try { window.parent.postMessage({ type: "ui/ready" }, "*"); } catch (e) {}
+})();
+</script>
+</body>
+</html>

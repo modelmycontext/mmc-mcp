@@ -1,0 +1,316 @@
+<!doctype html>
+<!--
+  form-runner.html — standalone, link-addressable host page for interface/view
+  slice forms, served at GET /run/:toolName (see src/server/httpRoutes.ts).
+
+  Drives the same loop as mmc-workflow's WorkflowFormStep.tsx, without the SPA:
+    1. initialize an MCP session on same-origin /mcp (capture mcp-session-id)
+    2. tools/call the slice tool (no args) -> _meta['mmc/formSpec']
+    3. resources/read ui://mmc/interface-form -> renderer HTML (NOT forked here)
+    4. host the renderer in a sandboxed iframe; postMessage protocol:
+         ui/ready -> ui/render {spec}; ui/resize {height}; ui/tool-call complete-slice
+    5. submit via complete-slice on the same session; success:false => error state
+
+  Hard-won client rules carried over from WorkflowFormStep/ChatDialog:
+    - every JSON-RPC request gets a UNIQUE monotonic id (@hono/mcp routes
+      responses by message id; reused ids misroute concurrent calls)
+    - SSE vs JSON decided by the Content-Type header, never by body sniffing
+    - the whole load is wrapped in a timeout so the user always reaches a
+      usable error state instead of an infinite spinner
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Form — ModelMyContext</title>
+<style>
+  :root {
+    --navy: #0C2A43;
+    --navy-soft: rgba(12, 42, 67, 0.62);
+    --accent: #50A2FF;
+    --border: #d7e1ec;
+    --surface: #ffffff;
+    --page: #f6f7f9;
+    --red: #F9423D;
+    --green: #05DF72;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--page);
+    color: var(--navy);
+    font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    width: 100%;
+    max-width: 720px;
+    padding: 28px 20px 8px;
+  }
+  .wordmark {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--navy-soft);
+  }
+  .wordmark b { color: var(--accent); }
+  main {
+    width: 100%;
+    max-width: 720px;
+    padding: 12px 20px 40px;
+    flex: 1;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 16px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .pad { padding: 28px 24px; }
+  .muted { color: var(--navy-soft); font-size: 13px; }
+  .spinner {
+    width: 22px; height: 22px;
+    border: 3px solid var(--accent);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-title { color: var(--red); font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .done-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .done-check {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(5, 223, 114, 0.14);
+    color: #0a9b53;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  button.retry {
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  button.retry:hover { border-color: var(--accent); }
+  iframe { display: block; width: 100%; border: 0; background: var(--page); }
+  footer {
+    width: 100%;
+    max-width: 720px;
+    padding: 0 20px 26px;
+    font-size: 11px;
+    color: var(--navy-soft);
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+  <header><div class="wordmark">Model<b>My</b>Context</div></header>
+  <main>
+    <h1 id="title">Loading…</h1>
+    <div class="card">
+      <div id="state-loading" class="pad">
+        <div class="spinner"></div>
+        <div class="muted">Loading the form…</div>
+      </div>
+      <div id="state-error" class="pad hidden">
+        <div class="error-title">This form could not be loaded.</div>
+        <div class="muted" id="error-detail"></div>
+        <button class="retry" onclick="location.reload()">Try again</button>
+      </div>
+      <div id="state-submitting" class="pad hidden">
+        <div class="spinner"></div>
+        <div class="muted">Submitting…</div>
+      </div>
+      <div id="state-done" class="pad hidden">
+        <div class="done-check">✓</div>
+        <div class="done-title">Submitted</div>
+        <div class="muted">Your information has been received. You can close this page.</div>
+      </div>
+      <iframe id="frame" class="hidden" title="Form" sandbox="allow-scripts"></iframe>
+    </div>
+  </main>
+  <footer>Powered by ModelMyContext</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var INTERFACE_FORM_URI = 'ui://mmc/interface-form';
+  var LOAD_TIMEOUT_MS = 15000;
+
+  var toolName = decodeURIComponent(location.pathname.replace(/^\/run\//, '').replace(/\/+$/, ''));
+
+  var els = {
+    title: document.getElementById('title'),
+    loading: document.getElementById('state-loading'),
+    error: document.getElementById('state-error'),
+    errorDetail: document.getElementById('error-detail'),
+    submitting: document.getElementById('state-submitting'),
+    done: document.getElementById('state-done'),
+    frame: document.getElementById('frame'),
+  };
+
+  function show(name) {
+    ['loading', 'error', 'submitting', 'done', 'frame'].forEach(function (k) {
+      els[k].classList.toggle('hidden', k !== name);
+    });
+  }
+
+  function fail(detail) {
+    els.errorDetail.textContent = detail || '';
+    if (els.title.textContent === 'Loading…') els.title.textContent = 'Form unavailable';
+    show('error');
+  }
+
+  // Unique monotonic JSON-RPC id — @hono/mcp correlates responses to their
+  // originating POST by message id; two in-flight requests must never share one.
+  var nextRpcId = 1;
+  var sessionId = null;
+
+  function mcpRequest(method, params) {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json, text/event-stream',
+    };
+    if (sessionId) headers['mcp-session-id'] = sessionId;
+    return fetch('/mcp', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({ jsonrpc: '2.0', id: nextRpcId++, method: method, params: params }),
+    }).then(function (res) {
+      var sessionHeader = res.headers.get('mcp-session-id');
+      if (sessionHeader) sessionId = sessionHeader;
+      var isSse = (res.headers.get('content-type') || '').indexOf('text/event-stream') !== -1;
+      return res.text().then(function (text) {
+        var jsonText = isSse
+          ? text.split('\n').filter(function (l) { return l.indexOf('data:') === 0; })
+              .map(function (l) { return l.slice(5).trim(); }).join('')
+          : text;
+        var json = JSON.parse(jsonText);
+        if (json.error) {
+          var msg = typeof json.error === 'string' ? json.error : (json.error.message || JSON.stringify(json.error));
+          throw new Error(msg);
+        }
+        return json.result;
+      });
+    });
+  }
+
+  function withTimeout(promise, ms, label) {
+    return new Promise(function (resolve, reject) {
+      var t = setTimeout(function () { reject(new Error(label + ' timed out.')); }, ms);
+      promise.then(
+        function (v) { clearTimeout(t); resolve(v); },
+        function (e) { clearTimeout(t); reject(e); }
+      );
+    });
+  }
+
+  function contentText(result) {
+    var content = result && result.content;
+    if (!Array.isArray(content)) return '';
+    return content.map(function (c) { return c && c.text ? c.text : ''; }).join('\n');
+  }
+
+  var spec = null;
+
+  function boot() {
+    if (!toolName) {
+      fail('No form was specified in the link.');
+      return;
+    }
+    show('loading');
+    withTimeout(
+      mcpRequest('initialize', {
+        protocolVersion: '2024-11-05',
+        capabilities: {},
+        clientInfo: { name: 'mmc-form-runner', version: '1.0.0' },
+      }).then(function () {
+        return Promise.all([
+          mcpRequest('tools/call', { name: toolName, arguments: {} }),
+          mcpRequest('resources/read', { uri: INTERFACE_FORM_URI }),
+        ]);
+      }),
+      LOAD_TIMEOUT_MS,
+      'Loading the form'
+    ).then(function (results) {
+      var toolRes = results[0];
+      var resourceRes = results[1];
+      spec = toolRes && toolRes._meta && toolRes._meta['mmc/formSpec'];
+      var contents = resourceRes && resourceRes.contents;
+      var rendererHtml = Array.isArray(contents) && contents[0] && contents[0].text;
+      if (!spec) {
+        fail('This step does not provide a form.');
+        return;
+      }
+      if (!rendererHtml) {
+        fail('The form renderer is unavailable.');
+        return;
+      }
+      els.title.textContent = spec.title || 'Form';
+      document.title = (spec.title || 'Form') + ' — ModelMyContext';
+      els.frame.style.height = '360px';
+      els.frame.srcdoc = rendererHtml;
+      show('frame');
+    }).catch(function (err) {
+      fail(err && err.message ? err.message : String(err));
+    });
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.source !== els.frame.contentWindow) return;
+    var d = e.data || {};
+    if (d.type === 'ui/ready' && spec) {
+      els.frame.contentWindow.postMessage({ type: 'ui/render', spec: spec }, '*');
+      return;
+    }
+    if (d.type === 'ui/resize' && typeof d.height === 'number') {
+      els.frame.style.height = Math.min(Math.max(d.height + 2, 80), 1200) + 'px';
+      return;
+    }
+    if (d.type === 'ui/tool-call' && d.tool === 'complete-slice') {
+      show('submitting');
+      mcpRequest('tools/call', { name: 'complete-slice', arguments: d.arguments || {} })
+        .then(function (result) {
+          // complete-slice returns HTTP 200 even when it could not resolve or
+          // evaluate the slice ({ success: false, error }). Treat that as a
+          // failure so the user sees an actionable error, not a false "Submitted".
+          var text = contentText(result);
+          var failed = false;
+          try {
+            var parsed = JSON.parse(text);
+            if (parsed && parsed.success === false) failed = true;
+          } catch (_) { /* non-JSON success payload — treat as accepted */ }
+          if (failed) {
+            fail('The submission was not accepted. ' + text);
+            return;
+          }
+          show('done');
+        })
+        .catch(function (err) {
+          fail('The submission was not accepted. ' + (err && err.message ? err.message : String(err)));
+        });
+    }
+  });
+
+  boot();
+})();
+</script>
+</body>
+</html>

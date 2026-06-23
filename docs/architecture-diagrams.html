@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mmc-mcp — Architecture Diagrams</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; padding: 2rem 2.5rem 4rem; background: #f7f8fa; color: #1b1f24;
+  }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  .sub { color: #5a626b; margin: 0 0 2rem; font-size: .95rem; }
+  section { background: #fff; border: 1px solid #e3e6ea; border-radius: 10px; padding: 1.25rem 1.5rem 1.75rem; margin-bottom: 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  h2 { font-size: 1.1rem; margin: 0 0 .25rem; }
+  .cap { color: #5a626b; font-size: .85rem; margin: 0 0 1rem; }
+  .mermaid { overflow-x: auto; text-align: center; }
+  footer { color: #8a929b; font-size: .8rem; text-align: center; margin-top: 2rem; }
+</style>
+</head>
+<body>
+  <h1>mmc-mcp — Architecture Diagrams</h1>
+  <p class="sub">Rendered companion to <code>docs/architecture-analysis.md</code>. Open this file in any browser.</p>
+
+  <section>
+    <h2>1 · Three-process topology (context)</h2>
+    <p class="cap">Who drives the runtime and over which transport.</p>
+    <pre class="mermaid">
+flowchart LR
+  subgraph authoring["Authoring / test (session-scoped)"]
+    WB["mmc-workbench :8888<br/>Test panel"]
+  end
+  subgraph clients["External agents (disk-scoped)"]
+    CD["Claude Desktop / CLI<br/>(stdio)"]
+    WF["mmc-workflow :3002<br/>(HTTP)"]
+  end
+  MCP["mmc-mcp :3001<br/>MCP runtime + event bus"]
+  GH[("GitHub<br/>skills repo")]
+  EXT["External MCP servers<br/>(GitHub, SQLite)"]
+  WB <-->|"HTTP /mcp"| MCP
+  CD <-->|"stdio"| MCP
+  WF <-->|"HTTP /mcp"| MCP
+  MCP -->|"sync skills/"| GH
+  MCP -->|"proxy tools"| EXT
+    </pre>
+  </section>
+
+  <section>
+    <h2>2 · Component diagram (UML — static structure)</h2>
+    <p class="cap">Components with provided/required interfaces (ball &amp; socket), assembly connectors, a composition diamond to the data store, and a dashed <code>&laquo;use&raquo;</code> dependency on the GitHub skill source. The <strong>TodoProcessor</strong> (green) is a first-class component: the event-sourced work-item machine that surfaces interface/view todos and drives <code>workflow_completed</code>.</p>
+    <img src="component-diagram.svg" alt="mmc-mcp UML component diagram" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+  </section>
+
+  <section>
+    <h2>3 · Component map — information flow (dynamic view)</h2>
+    <p class="cap">Block diagram of how data moves through the runtime. Arrows are labelled with <em>what</em> flows (tool calls, slice data, facts, events, outcomes, todos). Note the feedback loop (&#8635;): emitted outcomes re-enter the bus and can trigger further automation.</p>
+    <pre class="mermaid">
+flowchart TB
+  Client(["MCP Client — workbench / external agent"])
+
+  subgraph IN["&#9312; Transport + request handling — server/index.ts"]
+    direction LR
+    TLIST["ListTools<br/>build tool catalogue"]
+    TCALL["CallTool<br/>complete-slice · log-event · get-next-event · view"]
+  end
+
+  BUS{{"&#9313; EventBus — sequence + pub/sub"}}
+
+  subgraph SUBS["&#9314; Bus subscribers (routers)"]
+    direction LR
+    R1["store router"]
+    R2["automation dispatch"]
+    R3["client router + completion"]
+  end
+
+  subgraph RUN["&#9315; Execution engines"]
+    direction LR
+    SE["sliceEvaluator<br/>human / complete-slice"]
+    ASR["automatedSliceRunner<br/>automation"]
+    VSR["viewSliceRunner<br/>view / read-only"]
+    TP["TodoProcessor"]
+  end
+
+  KNOW["&#9316; Skill engine<br/>load · validate · pattern · trigger maps"]
+  GH[("skills/ &#9665; GitHub sync")]
+  EFFECT["&#9317; Side effects<br/>connectors · LLM · external MCP"]
+  ES[("event store<br/>SQLite / in-memory")]
+  TS[("todo store")]
+
+  %% inbound
+  Client -->|"tool call"| TCALL
+  Client -->|"list request"| TLIST
+  TLIST -->|"filtered tool list"| Client
+
+  %% knowledge feeds handlers + engines
+  GH --> KNOW
+  KNOW -->|"slice data + trigger maps"| TCALL
+  KNOW -->|"slice defs"| SE
+  KNOW -->|"slice defs"| ASR
+  KNOW -->|"slice defs"| VSR
+  KNOW -->|"slice defs"| TP
+
+  %% complete-slice + view + direct events
+  TCALL -->|"facts + sliceId"| SE
+  TCALL -->|"raw event"| BUS
+  TCALL -->|"call view tool"| VSR
+  SE -->|"emit outcome"| BUS
+  VSR -->|"read facts"| ES
+  VSR -->|"projection (no event)"| Client
+
+  %% jobs / side effects
+  SE -->|"query/command jobs"| EFFECT
+  ASR -->|"query/command jobs"| EFFECT
+
+  %% bus fan-out
+  BUS --> R1
+  BUS --> R2
+  BUS --> R3
+  BUS --> TP
+  R1 -->|"persist (test&rarr;mem, prod&rarr;SQLite)"| ES
+  R2 -->|"trigger"| ASR
+  ASR -->|"read session facts"| ES
+  ASR -->|"emit outcome &#8635;"| BUS
+  R3 -->|"deliver event / workflow_completed"| Client
+
+  %% todos
+  TP -->|"re-derive from log"| ES
+  TP -->|"write work item"| TS
+  TP -->|"surface interface/view todo"| R3
+    </pre>
+  </section>
+
+  <section>
+    <h2>4 · Runtime dispatch — the three subscribe('*') routers</h2>
+    <p class="cap">How a published outcome event flows through the bus to persistence, automation, and the client.</p>
+    <pre class="mermaid">
+sequenceDiagram
+  participant C as Client (workbench / agent)
+  participant H as CallTool handler
+  participant B as EventBus
+  participant R1 as Router#1 store
+  participant R2 as Router#2 automation
+  participant R3 as Router#3 client+done
+  C->>H: complete-slice / log-event-to-bus
+  H->>B: publish(outcome event)
+  B->>R1: persist (test&rarr;in-mem, prod&rarr;SQLite)
+  B->>R2: session skill? &rarr; automatedSliceRunner (fire-and-forget)
+  Note over R2: disk path &rarr; resolveDiskSliceData &rarr; handler
+  B->>R3: routed/automated? else terminal&rarr;workflow_completed
+  R3-->>C: deliver event / completion to waiting get-next-event
+    </pre>
+  </section>
+
+  <footer>mmc-mcp architecture · generated companion to docs/architecture-analysis.md</footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", flowchart: { useMaxWidth: true } });
+  </script>
+</body>
+</html>

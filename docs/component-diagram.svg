@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="760" viewBox="0 0 1060 760" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <symbol id="cmp" viewBox="0 0 26 22">
+      <rect x="7" y="3" width="17" height="16" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <rect x="2" y="6" width="9" height="4.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <rect x="2" y="12" width="9" height="4.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    </symbol>
+    <filter id="sh" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1060" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <rect x="20" y="14" width="270" height="58" fill="#ffffff" stroke="#bdbdbd"/>
+  <text x="34" y="38" font-size="13" fill="#6b4fbb" font-weight="600">Component Diagram:</text>
+  <text x="34" y="60" font-size="15" fill="#c0392b" font-weight="700">mmc-mcp Runtime</text>
+
+  <!-- ============ CONNECTORS (under boxes) ============ -->
+  <g stroke="#555" stroke-width="1.5" fill="none">
+    <path d="M220,346 H293"/>
+    <path d="M220,386 H293"/>
+    <path d="M547,210 H640"/>
+    <path d="M547,320 H640"/>
+    <path d="M547,415 H640"/>
+    <path d="M547,510 H640"/>
+    <path d="M547,616 H640"/>
+    <path d="M420,630 V672"/>
+  </g>
+
+  <!-- composition diamond (owner = central) -->
+  <path d="M420,630 l9,9 l-9,9 l-9,-9 z" fill="#444" stroke="#444"/>
+
+  <!-- dashed «use» connectors -->
+  <g stroke="#555" stroke-width="1.5" fill="none" stroke-dasharray="6 4">
+    <path d="M847,312 L875,290"/>
+    <path d="M847,344 L875,401"/>
+    <path d="M400,141 L513,131"/>
+    <path d="M730,550 L730,573"/>
+  </g>
+  <!-- arrowhead: TodoProcessor -> Event Store (re-derive from log) -->
+  <path d="M726,567 L730,574 L734,567" fill="none" stroke="#555" stroke-width="1.5"/>
+
+  <!-- ============ INTERFACES ============ -->
+  <!-- provided lollipops -->
+  <g stroke="#333" stroke-width="1.6">
+    <line x1="307" y1="346" x2="320" y2="346"/><circle cx="300" cy="346" r="7" fill="#fff"/>
+    <line x1="307" y1="386" x2="320" y2="386"/><circle cx="300" cy="386" r="7" fill="#fff"/>
+    <line x1="520" y1="210" x2="533" y2="210"/><circle cx="540" cy="210" r="7" fill="#fff"/>
+    <line x1="520" y1="320" x2="533" y2="320"/><circle cx="540" cy="320" r="7" fill="#fff"/>
+    <line x1="520" y1="415" x2="533" y2="415"/><circle cx="540" cy="415" r="7" fill="#fff"/>
+    <line x1="520" y1="510" x2="533" y2="510"/><circle cx="540" cy="510" r="7" fill="#fff"/>
+    <line x1="520" y1="616" x2="533" y2="616"/><circle cx="540" cy="616" r="7" fill="#fff"/>
+    <line x1="889" y1="290" x2="900" y2="290"/><circle cx="882" cy="290" r="7" fill="#fff"/>
+    <line x1="889" y1="401" x2="900" y2="401"/><circle cx="882" cy="401" r="7" fill="#fff"/>
+    <line x1="520" y1="124" x2="520" y2="116"/><circle cx="520" cy="131" r="7" fill="#fff"/>
+  </g>
+
+  <!-- required sockets -->
+  <g stroke="#333" stroke-width="1.7" fill="none">
+    <line x1="820" y1="312" x2="831" y2="312"/><path d="M838,303 A9,9 0 0,0 838,321"/>
+    <line x1="820" y1="344" x2="831" y2="344"/><path d="M838,335 A9,9 0 0,0 838,353"/>
+    <line x1="400" y1="150" x2="400" y2="141"/><path d="M391,141 A9,9 0 0,0 409,141"/>
+  </g>
+
+  <!-- interface labels -->
+  <g font-size="10.5" fill="#333">
+    <text x="293" y="342" text-anchor="end">MCP-Tools</text>
+    <text x="293" y="402" text-anchor="end">REST-API</text>
+    <text x="572" y="200" text-anchor="middle">SliceLoad</text>
+    <text x="574" y="310" text-anchor="middle">Execute</text>
+    <text x="568" y="405" text-anchor="middle">Rules</text>
+    <text x="572" y="500" text-anchor="middle">Todos</text>
+    <text x="570" y="606" text-anchor="middle">Events</text>
+    <text x="850" y="285" text-anchor="start">LLM API</text>
+    <text x="846" y="400" text-anchor="start">Connectors</text>
+    <text x="372" y="138" text-anchor="end">SkillSync</text>
+    <text x="738" y="566" font-size="9" text-anchor="start" fill="#555">re-derive from log</text>
+  </g>
+
+  <!-- ============ COMPONENTS ============ -->
+
+  <!-- Central orchestrator (tan) -->
+  <g filter="url(#sh)"><rect x="320" y="150" width="200" height="480" rx="2" fill="#fbe3a3" stroke="#d6a23c" stroke-width="1.5"/></g>
+  <use href="#cmp" x="492" y="156" width="22" height="18" style="color:#7a5b16"/>
+  <text x="412" y="180" font-size="10.5" fill="#5b4a1e" text-anchor="middle">«component»</text>
+  <text x="412" y="200" font-size="13.5" fill="#3a2f10" font-weight="700" text-anchor="middle">MCP Server /</text>
+  <text x="412" y="217" font-size="13.5" fill="#3a2f10" font-weight="700" text-anchor="middle">Event Dispatcher</text>
+  <text x="412" y="238" font-size="10" fill="#6b5a2a" text-anchor="middle" font-style="italic">server/index.ts</text>
+  <text x="412" y="252" font-size="10" fill="#6b5a2a" text-anchor="middle" font-style="italic">tools · routing · bus</text>
+
+  <!-- Left consumer (purple) -->
+  <g filter="url(#sh)"><rect x="40" y="320" width="180" height="92" rx="2" fill="#8c8cf0" stroke="#4a4ac6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="192" y="326" width="22" height="18" style="color:#fff"/>
+  <text x="124" y="346" font-size="10.5" fill="#ececff" text-anchor="middle">«component»</text>
+  <text x="124" y="366" font-size="13" fill="#fff" font-weight="700" text-anchor="middle">MCP Clients</text>
+  <text x="124" y="384" font-size="9.5" fill="#e6e6ff" text-anchor="middle">Workbench Test Panel /</text>
+  <text x="124" y="397" font-size="9.5" fill="#e6e6ff" text-anchor="middle">External Agents</text>
+
+  <!-- GitHub Skills Repo (purple, top) -->
+  <g filter="url(#sh)"><rect x="450" y="50" width="200" height="66" rx="2" fill="#8c8cf0" stroke="#4a4ac6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="622" y="56" width="22" height="18" style="color:#fff"/>
+  <text x="540" y="74" font-size="10.5" fill="#ececff" text-anchor="middle">«component»</text>
+  <text x="540" y="93" font-size="12.5" fill="#fff" font-weight="700" text-anchor="middle">GitHub Skills Repo</text>
+  <text x="540" y="108" font-size="9.5" fill="#e6e6ff" text-anchor="middle">remote outcome-model source</text>
+
+  <!-- Skill Engine (lavender) -->
+  <g filter="url(#sh)"><rect x="640" y="175" width="180" height="70" rx="2" fill="#d2d2f4" stroke="#9696d6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="792" y="181" width="22" height="18" style="color:#4a4a86"/>
+  <text x="730" y="199" font-size="10.5" fill="#3c3c70" text-anchor="middle">«component»</text>
+  <text x="730" y="218" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Skill Engine</text>
+  <text x="730" y="234" font-size="9.5" fill="#43436e" text-anchor="middle">load · validate · pattern</text>
+
+  <!-- Execution Engines (lavender) -->
+  <g filter="url(#sh)"><rect x="640" y="280" width="180" height="80" rx="2" fill="#d2d2f4" stroke="#9696d6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="792" y="286" width="22" height="18" style="color:#4a4a86"/>
+  <text x="730" y="304" font-size="10.5" fill="#3c3c70" text-anchor="middle">«component»</text>
+  <text x="730" y="323" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Execution Engines</text>
+  <text x="730" y="339" font-size="9.5" fill="#43436e" text-anchor="middle">sliceEvaluator · automated</text>
+  <text x="730" y="352" font-size="9.5" fill="#43436e" text-anchor="middle">slice runner · view runner</text>
+
+  <!-- Business Rules Engine (lavender) -->
+  <g filter="url(#sh)"><rect x="640" y="380" width="180" height="70" rx="2" fill="#d2d2f4" stroke="#9696d6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="792" y="386" width="22" height="18" style="color:#4a4a86"/>
+  <text x="730" y="404" font-size="10.5" fill="#3c3c70" text-anchor="middle">«component»</text>
+  <text x="730" y="423" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Business Rules</text>
+  <text x="730" y="439" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Engine</text>
+
+  <!-- TodoProcessor (GREEN accent — prominent) -->
+  <g filter="url(#sh)"><rect x="640" y="470" width="180" height="86" rx="2" fill="#c5e8cb" stroke="#4f9d63" stroke-width="2"/></g>
+  <use href="#cmp" x="792" y="476" width="22" height="18" style="color:#2f6b40"/>
+  <text x="730" y="494" font-size="10.5" fill="#2f6b40" text-anchor="middle">«component»</text>
+  <text x="730" y="513" font-size="13" fill="#173d22" font-weight="700" text-anchor="middle">TodoProcessor</text>
+  <text x="730" y="529" font-size="9.3" fill="#2f5a3c" text-anchor="middle">event-sourced work-item machine</text>
+  <text x="730" y="541" font-size="9.3" fill="#2f5a3c" text-anchor="middle">surfaces interface/view todos ·</text>
+  <text x="730" y="552" font-size="9.3" fill="#2f5a3c" text-anchor="middle">drives workflow_completed</text>
+
+  <!-- Event Store Service (lavender) -->
+  <g filter="url(#sh)"><rect x="640" y="575" width="180" height="82" rx="2" fill="#d2d2f4" stroke="#9696d6" stroke-width="1.5"/></g>
+  <use href="#cmp" x="792" y="581" width="22" height="18" style="color:#4a4a86"/>
+  <text x="730" y="599" font-size="10.5" fill="#3c3c70" text-anchor="middle">«component»</text>
+  <text x="730" y="618" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Event Store</text>
+  <text x="730" y="634" font-size="12.5" fill="#23234a" font-weight="700" text-anchor="middle">Service</text>
+  <text x="730" y="650" font-size="9.5" fill="#43436e" text-anchor="middle">EventBus + persistence</text>
+
+  <!-- OpenRouter LLM (orange external) -->
+  <g filter="url(#sh)"><rect x="900" y="255" width="150" height="70" rx="2" fill="#f6a623" stroke="#bd7910" stroke-width="1.5"/></g>
+  <use href="#cmp" x="1022" y="261" width="22" height="18" style="color:#5e3c05"/>
+  <text x="975" y="279" font-size="10.5" fill="#5e3c05" text-anchor="middle">«component»</text>
+  <text x="975" y="298" font-size="12.5" fill="#3a2603" font-weight="700" text-anchor="middle">OpenRouter</text>
+  <text x="975" y="314" font-size="12.5" fill="#3a2603" font-weight="700" text-anchor="middle">LLM</text>
+
+  <!-- Connectors / External MCP (orange external) -->
+  <g filter="url(#sh)"><rect x="900" y="360" width="150" height="82" rx="2" fill="#f6a623" stroke="#bd7910" stroke-width="1.5"/></g>
+  <use href="#cmp" x="1022" y="366" width="22" height="18" style="color:#5e3c05"/>
+  <text x="975" y="384" font-size="10.5" fill="#5e3c05" text-anchor="middle">«component»</text>
+  <text x="975" y="403" font-size="12.5" fill="#3a2603" font-weight="700" text-anchor="middle">Connectors /</text>
+  <text x="975" y="419" font-size="12.5" fill="#3a2603" font-weight="700" text-anchor="middle">External MCP</text>
+  <text x="975" y="434" font-size="9" fill="#5e3c05" text-anchor="middle">json-* · email · github · sqlite</text>
+
+  <!-- SQLite Data Store (pale yellow, composition target) -->
+  <g filter="url(#sh)"><rect x="332" y="672" width="176" height="58" rx="2" fill="#fcf6c2" stroke="#cfc66e" stroke-width="1.5"/></g>
+  <use href="#cmp" x="480" y="678" width="22" height="18" style="color:#7a7421"/>
+  <text x="420" y="696" font-size="10.5" fill="#6b651c" text-anchor="middle">«component»</text>
+  <text x="420" y="715" font-size="12" fill="#43400f" font-weight="700" text-anchor="middle">SQLite Data Store</text>
+  <text x="420" y="727" font-size="9" fill="#6b651c" text-anchor="middle">events.db · todos.db · data.db</text>
+</svg>

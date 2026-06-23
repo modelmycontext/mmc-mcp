@@ -1,0 +1,365 @@
+<!doctype html>
+<!--
+  public-form.html — the authored, branded applicant form runner served at
+  GET /f/:token (see src/ui/publicForm.ts). Distinct from interface-form.html
+  (the slice-derived MCP-Apps renderer): this page is a standalone MCP-free
+  client that
+    1. fetches GET /forms/resolve/:token  -> { ok, spec } (PublicFormSpec)
+    2. renders branding + authored sections (intro/outro, colSpan grid) using
+       the SAME control vocabulary as interface-form.html, plus a vanilla-canvas
+       signature pad
+    3. on submit POSTs { jti, payload } to POST /external-events/:eventType
+       (payload = kebab factName -> value, plus signature-image when captured)
+
+  Zero dependencies, hand-duplicated control rendering — per the repo's
+  "no shared form packages" stance (mmc-knowledge/architecture/forms.md).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Application form</title>
+<style>
+  :root{
+    --bg:#0D1526; --card:#0C2A43; --ink:#FAFAFA; --ink-soft:rgba(250,250,250,.82);
+    --ink-mute:rgba(250,250,250,.5); --line:#174268; --accent:#50A2FF;
+    --red:#F9423D; --green:#05DF72; --radius:10px;
+    --ro-bg:rgba(255,255,255,.04);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:40px 16px;color-scheme:dark}
+  .card{max-width:760px;margin:0 auto;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:28px 28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  header.brand{display:flex;align-items:center;gap:16px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  header.brand img{height:56px;width:auto;object-fit:contain;background:#fff;border-radius:8px;padding:4px}
+  header.brand .org{font-size:15px;font-weight:600}
+  header.brand .tag{font-size:12px;color:var(--ink-mute)}
+  h1{font-size:22px;font-weight:650;margin:0 0 4px}
+  .eo{font-size:12px;color:var(--ink-mute);margin:0 0 18px}
+  section{padding:18px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0;padding-top:6px}
+  .sec-title{font-size:15px;font-weight:600;margin:0 0 4px}
+  .prose{color:var(--ink-soft);font-size:13.5px;margin:6px 0}
+  .prose p{margin:0 0 8px;white-space:pre-wrap}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:10px}
+  .field.full{grid-column:1/-1}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}.field{grid-column:1/-1!important}}
+  .field>label{display:block;font-size:13px;font-weight:550;margin-bottom:5px}
+  .field .req{color:var(--red);margin-left:3px}
+  .field .help{font-size:12px;color:var(--ink-mute);margin:-1px 0 5px}
+  input[type=text],input[type=number],input[type=date],input[type=datetime-local],select{
+    width:100%;padding:9px 11px;font:inherit;color:var(--ink);background:rgba(255,255,255,.06);
+    border:1px solid var(--line);border-radius:var(--radius);outline:none;transition:border-color .12s,box-shadow .12s}
+  input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(80,162,255,.2)}
+  input:disabled,select:disabled{opacity:.65;cursor:not-allowed}
+  .check{display:flex;align-items:flex-start;gap:9px}
+  .check input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent)}
+  .check label{font-weight:500;font-size:13.5px}
+  fieldset{border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin:0}
+  fieldset>legend{font-size:11px;color:var(--ink-mute);padding:0 6px;text-transform:uppercase;letter-spacing:.05em}
+  .coll-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+  .coll-item>div{flex:1}
+  .sig-wrap{border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.04);overflow:hidden}
+  canvas#sig{display:block;width:100%;height:160px;touch-action:none;cursor:crosshair;background:#fff}
+  .sig-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-top:1px solid var(--line)}
+  .sig-bar .lbl{font-size:12px;color:var(--ink-mute)}
+  .btn{font:inherit;font-weight:600;cursor:pointer;border-radius:var(--radius);border:1px solid var(--line);
+    background:rgba(255,255,255,.06);color:var(--ink);padding:8px 14px;transition:background .12s,border-color .12s}
+  .btn:hover{background:rgba(255,255,255,.12)}
+  .btn-sm{padding:5px 10px;font-size:13px}
+  .btn-primary{background:var(--accent);color:#06243f;border-color:var(--accent)}
+  .btn-primary:hover{background:#7ab8ff}
+  .btn-primary:disabled{opacity:.55;cursor:not-allowed}
+  .foot{display:flex;align-items:center;gap:14px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .err{color:var(--red);font-size:13px;font-weight:550;margin-top:10px}
+  .field.invalid input,.field.invalid select{border-color:var(--red);box-shadow:0 0 0 3px rgba(249,66,61,.18)}
+  footer.note{font-size:12px;color:var(--ink-mute);margin-top:24px;padding-top:16px;border-top:1px solid var(--line);white-space:pre-wrap}
+  .center{max-width:520px;margin:80px auto;text-align:center}
+  .center h1{margin-bottom:10px}
+  .spinner{width:22px;height:22px;border:3px solid var(--accent);border-top-color:transparent;border-radius:50%;
+    animation:spin .8s linear infinite;margin:0 auto 14px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="center" id="state-loading">
+    <div class="spinner"></div>
+    <div class="prose">Verifying your link…</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var token = decodeURIComponent(location.pathname.replace(/^\/f\//,"").replace(/\/+$/,""));
+  var card = document.getElementById("card");
+  var spec = null;
+  var values = {};
+  var sig = { canvas:null, ctx:null, drawing:false, dirty:false };
+  var errEl = null;
+
+  function el(tag, attrs, kids){
+    var n=document.createElement(tag);
+    if(attrs)Object.keys(attrs).forEach(function(k){
+      if(k==="class")n.className=attrs[k];
+      else if(k==="text")n.textContent=attrs[k];
+      else if(k==="html")n.innerHTML=attrs[k];
+      else if(k.slice(0,2)==="on")n.addEventListener(k.slice(2),attrs[k]);
+      else if(attrs[k]===true)n.setAttribute(k,"");
+      else if(attrs[k]!=null&&attrs[k]!==false)n.setAttribute(k,attrs[k]);
+    });
+    (kids||[]).forEach(function(c){ if(c!=null)n.appendChild(typeof c==="string"?document.createTextNode(c):c); });
+    return n;
+  }
+  function centered(title, bodyKids){
+    card.innerHTML="";
+    card.appendChild(el("div",{class:"center"},[el("h1",{text:title})].concat(bodyKids||[])));
+  }
+
+  // ── control rendering (hand-duplicated from interface-form.html) ──
+  function scalarInput(control,value,onChange,ro){
+    var map={text:"text",number:"number",date:"date",datetime:"datetime-local"};
+    return el("input",{type:map[control.kind]||"text",value:value==null?"":value,disabled:ro||undefined,
+      oninput:function(e){onChange(e.target.value);}});
+  }
+  function checkbox(value,onChange,ro,label){
+    var box=el("input",{type:"checkbox",disabled:ro||undefined,onchange:function(e){onChange(e.target.checked);}});
+    if(value===true||value==="true")box.checked=true;
+    return el("div",{class:"check"},[box,label?el("label",{text:label}):null]);
+  }
+  function select(control,value,onChange,ro){
+    var opts=[el("option",{value:"",text:ro?"":"Select…"})];
+    (control.options||[]).forEach(function(o){var op=el("option",{value:o,text:o});if(o===value)op.selected=true;opts.push(op);});
+    return el("select",{disabled:ro||undefined,onchange:function(e){onChange(e.target.value);}},opts);
+  }
+  function composite(control,value,onChange,ro){
+    // `obj` is a single persistent accumulator shared by every subfield closure
+    // (this function runs once per composite render; the control is not
+    // re-rendered on change). Each subfield MUTATES it then emits a shallow copy
+    // — mutating the shared object is what makes multi-field edits accumulate.
+    // (Copying a freshly-captured `obj` per edit dropped every field but the
+    // last one the user touched.)
+    var obj=(value&&typeof value==="object")?value:{};
+    var rows=(control.fields||[]).map(function(sub){
+      return el("div",{class:"field"},[el("label",{text:sub.label}),
+        controlNode(sub.control,obj[sub.name],function(v){obj[sub.name]=v;onChange(Object.assign({},obj));},ro,sub.label)]);
+    });
+    return el("fieldset",{},[el("legend",{text:control.typeName||"Details"})].concat(rows));
+  }
+  function controlNode(control,value,onChange,ro){
+    switch(control.kind){
+      case "checkbox":return checkbox(value,onChange,ro,null);
+      case "select":return select(control,value,onChange,ro);
+      case "composite":return composite(control,value,onChange,ro);
+      default:return scalarInput(control,value,onChange,ro);
+    }
+  }
+  function fieldNode(field){
+    var ro=!!field.readOnly;
+    var get=function(){return values[field.name];};
+    var set=function(v){values[field.name]=v;revalidate();};
+    if(values[field.name]===undefined)values[field.name]=field.value;
+    var spanCls=field.colSpan===1?"field":"field full";
+    if(field.control.kind==="checkbox"&&!field.collection){
+      return el("div",{class:"field full","data-field":field.name},[checkbox(get(),set,ro,field.label+(field.required?" *":""))]);
+    }
+    var kids=[el("label",{},[field.label,field.required?el("span",{class:"req",text:"*"}):null])];
+    if(field.helpText)kids.push(el("div",{class:"help",text:field.helpText}));
+    if(field.collection){
+      var wrap=el("div",{});
+      var redraw=function(){
+        wrap.innerHTML="";
+        var arr=Array.isArray(get())?get():[];
+        if(!arr.length)wrap.appendChild(el("div",{class:"prose",text:"No entries"}));
+        arr.forEach(function(item,i){
+          wrap.appendChild(el("div",{class:"coll-item"},[
+            el("div",{},[controlNode(field.control,item,function(v){arr[i]=v;set(arr);},ro)]),
+            ro?null:el("button",{class:"btn btn-sm",type:"button",title:"Remove",
+              onclick:function(){arr.splice(i,1);set(arr);redraw();}},["✕"])]));
+        });
+        if(!ro)wrap.appendChild(el("button",{class:"btn btn-sm",type:"button",
+          onclick:function(){var a=Array.isArray(get())?get():[];a.push(undefined);set(a);redraw();}},["+ Add "+field.label]));
+      };
+      redraw();
+      kids.push(wrap);
+      return el("div",{class:"field full","data-field":field.name},kids);
+    }
+    kids.push(controlNode(field.control,get(),set,ro));
+    return el("div",{class:(field.control.kind==="composite"?"field full":spanCls),"data-field":field.name},kids);
+  }
+  function prose(text){
+    var ps=String(text).split(/\n\s*\n/).map(function(p){return p.trim();}).filter(Boolean);
+    return el("div",{class:"prose"},ps.map(function(p){return el("p",{text:p});}));
+  }
+  function sectionNode(sec){
+    return el("section",{},[
+      sec.title?el("div",{class:"sec-title",text:sec.title}):null,
+      sec.intro?prose(sec.intro):null,
+      el("div",{class:"grid"},sec.fields.map(fieldNode)),
+      sec.outro?prose(sec.outro):null,
+    ]);
+  }
+
+  // ── signature pad (vanilla canvas → PNG base64) ──
+  function setupSignaturePad(canvas){
+    var ctx=canvas.getContext("2d");
+    // Size the backing store to the displayed CSS size × DPR for crisp strokes.
+    var dpr=window.devicePixelRatio||1;
+    var rect=canvas.getBoundingClientRect();
+    canvas.width=Math.max(1,Math.round(rect.width*dpr));
+    canvas.height=Math.max(1,Math.round(rect.height*dpr));
+    ctx.scale(dpr,dpr);
+    ctx.lineWidth=2;ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#0C2A43";
+    sig.canvas=canvas;sig.ctx=ctx;
+    var last=null;
+    function pos(e){
+      var r=canvas.getBoundingClientRect();
+      var p=e.touches?e.touches[0]:e;
+      return {x:p.clientX-r.left,y:p.clientY-r.top};
+    }
+    function down(e){e.preventDefault();sig.drawing=true;last=pos(e);}
+    function move(e){
+      if(!sig.drawing)return;e.preventDefault();
+      var p=pos(e);
+      ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();
+      last=p;sig.dirty=true;
+    }
+    function up(){sig.drawing=false;last=null;}
+    canvas.addEventListener("mousedown",down);canvas.addEventListener("mousemove",move);
+    window.addEventListener("mouseup",up);
+    canvas.addEventListener("touchstart",down,{passive:false});
+    canvas.addEventListener("touchmove",move,{passive:false});
+    canvas.addEventListener("touchend",up);
+  }
+  function clearSignature(){
+    if(!sig.ctx||!sig.canvas)return;
+    sig.ctx.clearRect(0,0,sig.canvas.width,sig.canvas.height);
+    sig.dirty=false;
+  }
+  function signatureDataUrl(){ return sig.dirty&&sig.canvas?sig.canvas.toDataURL("image/png"):null; }
+
+  // ── validation + submit ──
+  function missingRequired(){
+    var missing=[];
+    (spec.sections||[]).forEach(function(sec){
+      (sec.fields||[]).forEach(function(f){
+        if(!f.required)return;
+        var v=values[f.name],empty;
+        if(f.collection)empty=!Array.isArray(v)||!v.filter(function(x){return x!==undefined&&x!=="";}).length;
+        else if(f.control.kind==="checkbox")empty=false;
+        else empty=(v===undefined||v==="");
+        if(empty)missing.push(f);
+      });
+    });
+    return missing;
+  }
+  function markErrors(missing,extraMsg){
+    [].forEach.call(card.querySelectorAll(".field.invalid"),function(n){n.classList.remove("invalid");});
+    missing.forEach(function(f){
+      var node=card.querySelector('[data-field="'+f.name+'"]');
+      if(node)node.classList.add("invalid");
+    });
+    var parts=[];
+    if(missing.length)parts.push("Please complete: "+missing.map(function(f){return f.label;}).join(", "));
+    if(extraMsg)parts.push(extraMsg);
+    if(errEl)errEl.textContent=parts.join(" ");
+  }
+  function revalidate(){ if(errEl&&errEl.textContent)markErrors(missingRequired()); }
+  function collectFacts(){
+    var facts={};
+    (spec.sections||[]).forEach(function(sec){
+      (sec.fields||[]).forEach(function(f){
+        var v=values[f.name];
+        if(v===undefined||v==="")return;
+        if(f.control.kind==="number"&&!f.collection)v=Number(v);
+        facts[f.name]=v;
+      });
+    });
+    return facts;
+  }
+  function submit(btn){
+    var missing=missingRequired();
+    var sigUrl=signatureDataUrl();
+    if(missing.length||(spec.requiresSignature&&!sigUrl)){
+      markErrors(missing,spec.requiresSignature&&!sigUrl?"Please sign before submitting.":"");
+      return;
+    }
+    markErrors([],"");
+    btn.disabled=true;btn.textContent="Submitting…";
+    var payload=collectFacts();
+    if(sigUrl)payload["signature-image"]=sigUrl;
+    fetch("/external-events/"+encodeURIComponent(spec.eventType),{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({jti:token,payload:payload})
+    }).then(function(res){
+      return res.json().then(function(body){return {status:res.status,body:body};});
+    }).then(function(r){
+      if(r.status===200&&r.body&&r.body.ok!==false){
+        centered("Thank you",[
+          prose("Your application has been received. You'll hear back shortly."),
+          el("div",{class:"prose",html:'Reference: <code>'+token.slice(0,8)+'…</code>'})
+        ]);
+      }else{
+        btn.disabled=false;btn.textContent=spec.submitLabel;
+        var msg=(r.body&&(r.body.message||r.body.reason))||("Submission failed ("+r.status+").");
+        if(errEl)errEl.textContent="The submission was not accepted. "+msg;
+      }
+    }).catch(function(e){
+      btn.disabled=false;btn.textContent=spec.submitLabel;
+      if(errEl)errEl.textContent="The submission could not be sent. "+(e&&e.message?e.message:e);
+    });
+  }
+
+  function render(s){
+    spec=s;values={};
+    card.innerHTML="";
+    var b=spec.branding;
+    if(b&&(b.logoUrl||b.organisationName||b.tagline)){
+      var bk=[];
+      if(b.logoUrl)bk.push(el("img",{src:b.logoUrl,alt:b.organisationName||"logo"}));
+      if(b.organisationName||b.tagline)bk.push(el("div",{},[
+        b.organisationName?el("div",{class:"org",text:b.organisationName}):null,
+        b.tagline?el("div",{class:"tag",text:b.tagline}):null]));
+      card.appendChild(el("header",{class:"brand"},bk));
+    }
+    card.appendChild(el("h1",{text:spec.title}));
+    if(spec.externalOutcomeName)card.appendChild(el("p",{class:"eo",text:spec.externalOutcomeName}));
+    (spec.sections||[]).forEach(function(sec){card.appendChild(sectionNode(sec));});
+
+    if(spec.requiresSignature){
+      var canvas=el("canvas",{id:"sig"});
+      var wrap=el("div",{class:"sig-wrap"},[canvas,
+        el("div",{class:"sig-bar"},[
+          el("span",{class:"lbl",text:"Sign above"}),
+          el("button",{class:"btn btn-sm",type:"button",onclick:clearSignature},["Clear"])])]);
+      card.appendChild(el("section",{},[el("div",{class:"sec-title",text:"Signature"}),wrap]));
+      // canvas must be in the DOM before sizing from its layout box.
+      setupSignaturePad(canvas);
+    }
+
+    errEl=el("div",{class:"err"});
+    var submitBtn=el("button",{class:"btn btn-primary",type:"button"},[spec.submitLabel]);
+    submitBtn.addEventListener("click",function(){submit(submitBtn);});
+    card.appendChild(el("div",{class:"foot"},[submitBtn]));
+    card.appendChild(errEl);
+    if(b&&b.footer)card.appendChild(el("footer",{class:"note",text:b.footer}));
+  }
+
+  // ── boot ──
+  if(!token){ centered("This link can't be used",[prose("No token was provided.")]); return; }
+  fetch("/forms/resolve/"+encodeURIComponent(token),{headers:{Accept:"application/json"}})
+    .then(function(res){return res.json();})
+    .then(function(r){
+      if(r&&r.ok&&r.spec){ document.title=(r.spec.title||"Application form"); render(r.spec); }
+      else{ centered("This link can't be used",[prose((r&&r.message)||"The link is invalid or has expired.")]); }
+    })
+    .catch(function(e){ centered("Something went wrong",[prose(e&&e.message?e.message:String(e))]); });
+})();
+</script>
+</body>
+</html>

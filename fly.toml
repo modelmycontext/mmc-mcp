@@ -1,0 +1,59 @@
+# fly.toml — mmc-mcp deployment.
+#
+# State model: a single VM with a Fly volume mounted at /app/data backing the
+# two sqlite databases (events.db, data.db). Scale stays at one machine
+# because the event store is local sqlite and not replicated.
+
+app = "mmc-mcp"
+primary_region = "syd"
+
+[build]
+
+[env]
+  PORT = "8080"
+  MCP_PROJECT_ROOT = "/app"
+  # Disable the MCP stdio transport in production. Clients reach this app
+  # only over HTTP; the stdio transport is an unauthenticated entry point
+  # that bypasses session checks, trace-id middleware, and any future
+  # auth — defense in depth says don't run it when nothing legitimate
+  # uses it.
+  MCP_STDIO = "false"
+  # Non-secret defaults. Override via `flyctl secrets set` if these need to
+  # vary per-deploy or contain anything sensitive.
+  OPENROUTER_MODEL = "google/gemini-2.5-flash"
+  MMC_GITHUB_PATH = "models"
+  MMC_GITHUB_BRANCH = "main"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Keep the single volume-bound machine always running. Auto-stopping it would
+  # save pennies but Fly's edge would routinely return 503 while the machine
+  # cold-starts (bun + 3 child MCP servers take ~4s) since the proxy retries
+  # only ~40 times before giving up.
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[http_service.checks]]
+    # /livez is a pure liveness probe: 200 the moment bun is listening, with
+    # no skill-sync or external-MCP dependencies. /health stays around for
+    # operator inspection but returns 503 until skills are loaded, which is
+    # an MCP-config concern rather than a "this VM should take traffic" one.
+    grace_period = "45s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/livez"
+
+[[mounts]]
+  source = "mmc_mcp_data"
+  destination = "/app/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+[deploy]
+  strategy = "immediate"
